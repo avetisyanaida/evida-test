@@ -4,7 +4,7 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
 
-        console.log("📩 TELEGRAM UPDATE:", JSON.stringify(body, null, 2));
+        console.log("SITE_URL:", process.env.SITE_URL);
 
 
         if (!body.callback_query) {
@@ -12,9 +12,6 @@ export async function POST(req: Request) {
         }
 
         const callback = body.callback_query;
-
-        console.log("🆔 CHAT ID FROM TG:", callback.message?.chat?.id);
-
 
         const chatId = callback.message?.chat?.id?.toString();
         if (chatId !== process.env.TELEGRAM_ADMIN_CHAT_ID) {
@@ -28,7 +25,7 @@ export async function POST(req: Request) {
 
         const [action, withdrawId] = data.split(":");
 
-        await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/withdraw-action`, {
+        await fetch(`${process.env.SITE_URL}/api/admin/withdraw-action`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
