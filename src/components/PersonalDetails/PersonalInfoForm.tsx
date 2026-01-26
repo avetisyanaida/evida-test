@@ -1,5 +1,6 @@
 import React from "react";
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
+import {CustomSelect} from "@/src/components/ui/CustomSelect";
 
 interface FormsPersonal {
     userName: string;
@@ -13,6 +14,8 @@ interface FormsPersonal {
     country: string;
     personalNumber: string;
 }
+
+
 
 interface PersonalInfoFormProps {
     formsPersonal: FormsPersonal;
@@ -30,7 +33,22 @@ export const PersonalInfoForm = ({
                                      setPhone,
                                      usernameStatus,
                                  }: PersonalInfoFormProps) => {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
+    const monthOptions = [
+        { value: "january", label: t("january") },
+        { value: "february", label: t("february") },
+        { value: "march", label: t("march") },
+        { value: "april", label: t("april") },
+        { value: "may", label: t("may") },
+        { value: "june", label: t("june") },
+        { value: "july", label: t("july") },
+        { value: "august", label: t("august") },
+        { value: "september", label: t("september") },
+        { value: "october", label: t("october") },
+        { value: "november", label: t("november") },
+        { value: "december", label: t("december") },
+    ];
+
 
     return (
         <div className="personal-details-info fade">
@@ -87,50 +105,67 @@ export const PersonalInfoForm = ({
             </div>
 
             <div className="details-info-item">
-                <label>
-                    <select name="gender" value={formsPersonal.gender} onChange={handleChange}>
-                        <option value="female">{t("female")}</option>
-                        <option value="male">{t("male")}</option>
-                    </select>
-                </label>
+                <CustomSelect
+                    name="gender"
+                    value={formsPersonal.gender}
+                    placeholder={'Սեռ'}
+                    options={[
+                        {value: "female", label: t("female")},
+                        {value: "male", label: t("male")},
+                    ]}
+                    onChange={(name, value) =>
+                        handleChange({
+                            target: {name, value},
+                        } as any)
+                    }
+                />
 
                 <div className="birth-day">
-                    <input
-                        onChange={handleChange}
-                        name="day"
-                        value={formsPersonal.day}
-                        type="number"
-                        placeholder={t("day")}
+                    <label>
+                        <input
+                            onChange={handleChange}
+                            name="day"
+                            value={formsPersonal.day}
+                            type="number"
+                            placeholder={t("day")}
+                        />
+                    </label>
+                    <CustomSelect
+                        name="month"
+                        value={formsPersonal.month}
+                        placeholder={t("month")}
+                        options={monthOptions}
+                        onChange={(name, value) =>
+                            handleChange({
+                                target: { name, value },
+                            } as any)
+                        }
                     />
-                    <select name="month" value={formsPersonal.month} onChange={handleChange}>
-                        <option value="january">{t("january")}</option>
-                        <option value="february">{t("february")}</option>
-                        <option value="march">{t("march")}</option>
-                        <option value="april">{t("april")}</option>
-                        <option value="may">{t("may")}</option>
-                        <option value="june">{t("june")}</option>
-                        <option value="july">{t("july")}</option>
-                        <option value="august">{t("august")}</option>
-                        <option value="september">{t("september")}</option>
-                        <option value="october">{t("october")}</option>
-                        <option value="november">{t("november")}</option>
-                        <option value="december">{t("december")}</option>
-                    </select>
-                    <input
-                        onChange={handleChange}
-                        name="year"
-                        value={formsPersonal.year}
-                        type="number"
-                        placeholder={t("year")}
-                    />
+                    <label>
+                        <input
+                            onChange={handleChange}
+                            name="year"
+                            value={formsPersonal.year}
+                            type="number"
+                            placeholder={t("year")}
+                        />
+                    </label>
                 </div>
 
-                <label>
-                    <select name="country" value={formsPersonal.country} onChange={handleChange}>
-                        <option value="Armenia">{t("armenia")}</option>
-                        <option value="Georgia">{t("georgia")}</option>
-                    </select>
-                </label>
+                <CustomSelect
+                    name="country"
+                    value={formsPersonal.country}
+                    options={[
+                        { value: "Armenia", label: t("armenia") },
+                        { value: "Georgia", label: t("georgia") },
+                    ]}
+                    onChange={(name, value) =>
+                        handleChange({
+                            target: { name, value },
+                        } as any)
+                    }
+                />
+
 
                 <label>
                     <input

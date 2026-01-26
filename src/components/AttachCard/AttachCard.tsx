@@ -97,10 +97,8 @@ export const AttachCard = ({ onClose }: AttachPaymentProps) => {
 
                     </div>
                 ) : (
-                    <p>{t("attachCard.noCard")}</p>
+                    <p style={{color: 'white', margin: '10px 0'}}>{t("attachCard.noCard")}</p>
                 )}
-
-
                 <button
                     className="add-card-btn"
                     onClick={() => {

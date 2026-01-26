@@ -25,9 +25,8 @@ export const AdminForm = ({ formData, handleChange, handleClick, error, loading 
                     name="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
-                    placeholder={t("form.firstName")}
+                    placeholder={t('form.firstName')}
                 />
-                {error.firstName && <p className="error-p" style={{ color: "red" }}>{error.firstName}</p>}
             </label>
 
             <label className="label">
@@ -39,7 +38,6 @@ export const AdminForm = ({ formData, handleChange, handleClick, error, loading 
                     onChange={handleChange}
                     placeholder={t("form.lastName")}
                 />
-                {error.lastName && <p className="error-p" style={{ color: "red" }}>{error.lastName}</p>}
             </label>
 
             <label className="label">
@@ -51,7 +49,6 @@ export const AdminForm = ({ formData, handleChange, handleClick, error, loading 
                     onChange={handleChange}
                     placeholder={t("form.email")}
                 />
-                {error.email && <p className="error-p" style={{ color: "red" }}>{error.email}</p>}
             </label>
             <label className={'label'}>
                 <input
@@ -75,7 +72,6 @@ export const AdminForm = ({ formData, handleChange, handleClick, error, loading 
                     className={showPassword ? "icon eye-open" : "icon eye-close"}
                     onClick={() => setShowPassword(!showPassword)}
                 />
-                {error.password && <p className="error-p" style={{ color: "red" }}>{error.password}</p>}
             </label>
 
             <label className="label">
@@ -92,7 +88,6 @@ export const AdminForm = ({ formData, handleChange, handleClick, error, loading 
                     className={showConfirmPassword ? "icon eye-open" : "icon eye-close"}
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 />
-                {error.confirmPassword && <p className="error-p" style={{ color: "red" }}>{error.confirmPassword}</p>}
             </label>
 
             <button className="log" onClick={handleClick} disabled={loading}>

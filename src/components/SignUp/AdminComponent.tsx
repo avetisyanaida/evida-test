@@ -71,36 +71,36 @@ export const AdminComponent: React.FC<Props> = ({ onClose }) => {
         let isValid = true;
 
         if (!formData.firstName.trim()) {
-            errors.firstName = t("registerModal.firstNameRequired");
+            toast.error(t("registerModal.firstNameRequired"))
             isValid = false;
         } else if (!validateLatin(formData.firstName)) {
-            errors.firstName = t("registerModal.onlyLatin");
+            toast.error(t("registerModal.onlyLatin"));
             isValid = false;
         }
 
         if (!formData.lastName.trim()) {
-            errors.lastName = t("registerModal.lastNameRequired");
+            toast.error(t("registerModal.lastNameRequired"));
             isValid = false;
         } else if (!validateLatin(formData.lastName)) {
-            errors.lastName = t("registerModal.onlyLatin");
+            toast.error(t("registerModal.onlyLatin"));
             isValid = false;
         }
 
         if (!formData.email.trim() || !validateEmail(formData.email)) {
-            errors.email = t("registerModal.invalidEmail");
+            toast.error(t("registerModal.invalidEmail"));
             isValid = false;
         }
 
         if (!formData.password.trim()) {
-            errors.password = t("registerModal.passwordRequired");
+            toast.error(t("registerModal.passwordRequired"));
             isValid = false;
         } else if (!validatePassword(formData.password)) {
-            errors.password = t("registerModal.passwordRules");
+            toast.error(t("registerModal.passwordRules"));
             isValid = false;
         }
 
         if (formData.password !== formData.confirmPassword) {
-            errors.confirmPassword = t("registerModal.passwordsDontMatch");
+            toast.error(t("registerModal.passwordsDontMatch"));
             isValid = false;
         }
 

@@ -1,0 +1,59 @@
+.custom-select {
+  position: relative;
+  width: 100%;
+
+  &__value {
+    background-color: #18133b;
+    font-size: 16px;
+    border: 1px solid #5244a6;
+    border-radius: 10px;
+    padding: 12px 40px 12px 14px;
+    color: #fff;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.2s;
+
+    &:hover {
+      border-color: #00f0ff;
+    }
+  }
+
+  .arrow {
+    position: absolute;
+    right: 14px;
+    top: 50%;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: translateY(-50%) rotate(45deg);
+    transition: transform 0.2s;
+
+    &.open {
+      transform: translateY(-50%) rotate(-135deg);
+    }
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: #020617;
+    border-radius: 10px;
+    z-index: 20;
+    overflow: hidden;
+
+    li {
+      padding: 12px 14px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.15s, color 0.15s;
+
+      &:hover {
+        background: #00f0ff;
+        color: #000;
+      }
+    }
+  }
+}

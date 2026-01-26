@@ -58,7 +58,7 @@ export const TransactionHistory = () => {
     }, [showHistory, fetchTransactions]);
 
     if (loading) return <p>Բեռնվում է…</p>;
-    if (!transactions.length) return <p>Դեռ գործարքներ չկան</p>;
+    if (!transactions.length) return <p style={{color: 'white'}}>Դեռ գործարքներ չկան</p>;
 
     return (
         <div className="tx-table-wrap">
