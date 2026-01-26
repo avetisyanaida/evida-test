@@ -2,6 +2,7 @@
 
 import {useEffect, useState} from "react";
 import {supabase} from "@/src/hooks/supabaseClient";
+import {CustomSelect} from "@/src/components/ui/CustomSelect";
 
 interface SavedCard {
     id: string;
@@ -19,6 +20,13 @@ export default function Withdraw({onCloseAction,}: { onCloseAction: () => void }
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
     const [msg, setMsg] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const withdrawMethodOptions = [
+        { value: "card", label: "MasterCard / Visa" },
+        { value: "idram", label: "Idram" },
+        { value: "telcell", label: "Telcell" },
+    ];
+
 
 
     useEffect(() => {
@@ -96,13 +104,19 @@ export default function Withdraw({onCloseAction,}: { onCloseAction: () => void }
     }
         return (
         <div className="withdraw">
-            <h3>Կանխիկացում</h3>
+            <h3 style={{margin: '15px 0'}}>Կանխիկացում</h3>
 
-            <select value={method} onChange={e => setMethod(e.target.value as WithdrawMethod)}>
-                <option value="card">Քարտ</option>
-                <option value="idram">Idram</option>
-                <option value="telcell">Telcell</option>
-            </select>
+            <CustomSelect
+                name="withdrawMethod"
+                value={method}
+                placeholder="Ընտրիր մեթոդը"
+                options={withdrawMethodOptions}
+                onChange={(_, value) => {
+                    setMethod(value as WithdrawMethod);
+                    setSelectedCardId(null); // մեթոդ փոխելիս reset
+                }}
+            />
+
 
             {method === "card" && (
                 <div className="cards">
@@ -125,7 +139,7 @@ export default function Withdraw({onCloseAction,}: { onCloseAction: () => void }
                     onChange={e => setAmount(e.target.value)}
                 />
             </label>
-            <div className={'btn-withdraw'}>
+            <div style={{margin: '15px 0'}} className={'btn-withdraw'}>
                 <button style={{
                     padding: "10px 30px",
                 }} onClick={submitWithdraw}>Հաստատել
