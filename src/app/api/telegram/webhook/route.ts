@@ -22,7 +22,7 @@ export async function POST(req: Request) {
 
         const [action, withdrawId] = data.split(":");
 
-        await fetch(`${process.env.SITE_URL}/api/admin/withdraw-action`, {
+        await fetch(`${process.env.NEXT_PUBLIC_SITE_URL}/api/admin/withdraw-action`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
