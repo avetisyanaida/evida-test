@@ -4,11 +4,17 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
 
+        console.log("📩 TELEGRAM UPDATE:", JSON.stringify(body, null, 2));
+
+
         if (!body.callback_query) {
             return NextResponse.json({ ok: true });
         }
 
         const callback = body.callback_query;
+
+        console.log("🆔 CHAT ID FROM TG:", callback.message?.chat?.id);
+
 
         const chatId = callback.message?.chat?.id?.toString();
         if (chatId !== process.env.TELEGRAM_ADMIN_CHAT_ID) {
