@@ -4,7 +4,6 @@ export async function POST(req: Request) {
     try {
         const body = await req.json();
 
-        // եթե callback_query չկա՝ ուղղակի OK
         if (!body.callback_query) {
             return NextResponse.json({ ok: true });
         }
@@ -23,8 +22,7 @@ export async function POST(req: Request) {
 
         const [action, withdrawId] = data.split(":");
 
-        // 🔥 ՔԱՆԻ ՈՐ DEV ԵՆՔ, ՍՏՈՒԳ HTTP LOCALHOST
-        await fetch("http://localhost:3000/api/admin/withdraw-action", {
+        await fetch(`${process.env.SITE_URL}/api/admin/withdraw-action`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -34,7 +32,6 @@ export async function POST(req: Request) {
             }),
         });
 
-        // ✏️ Փոփոխում ենք Telegram message-ը
         await fetch(
             `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/editMessageText`,
             {
@@ -47,11 +44,10 @@ export async function POST(req: Request) {
                         action === "approve"
                             ? `✅ Հաստատված\n\n${callback.message.text}`
                             : `❌ Մերժված\n\n${callback.message.text}`,
-                    reply_markup: { inline_keyboard: [] }, // ❌ կոճակները հանում ենք
+                    reply_markup: { inline_keyboard: [] },
                 }),
             }
         );
-
 
         return NextResponse.json({ ok: true });
     } catch (err) {
