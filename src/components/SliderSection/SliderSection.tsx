@@ -3,7 +3,6 @@
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Slider from "react-slick";
-import Image from "next/image";
 
 export const SliderSection = () => {
     const settings = {
@@ -15,21 +14,29 @@ export const SliderSection = () => {
         autoplay: true,
         autoplaySpeed: 2000,
     };
+
     const slides = [
         { id: 1, image: "/bonus-camp.png", title: "Բարի գալուստ մեր կայք" },
         { id: 2, image: "/bonus-camp2.png", title: "Խաղա ու շահիր" },
         { id: 3, image: "/bonus-camp3.png", title: "Մասնակցիր մրցաշարերին" },
     ];
-    return <section className={'slider-section'}>
-        <div className="container">
-            <Slider {...settings} className={'slider'}>
-                {slides.map((slide => (
-                    <div key={slide.id}>
-                        <Image src={slide.image} alt={slide.title} loading={"lazy"} width={100} height={100}/>
-                        <h3>{slide.title}</h3>
-                    </div>
-                )))}
-            </Slider>
-        </div>
-    </section>
-}
+
+    return (
+        <section className="slider-section">
+            <div className="container">
+                <Slider {...settings} className="slider">
+                    {slides.map(slide => (
+                        <div key={slide.id}>
+                            <div
+                                className="slide-bg"
+                                style={{ backgroundImage: `url(${slide.image})` }}
+                            >
+                                {/*<h3>{slide.title}</h3>*/}
+                            </div>
+                        </div>
+                    ))}
+                </Slider>
+            </div>
+        </section>
+    );
+};
