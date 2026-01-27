@@ -3,14 +3,12 @@ export const runtime = "nodejs";
 import { NextResponse } from "next/server";
 import crypto from "crypto";
 
-/* ---- TIME FORMAT: YYYY-MM-DD HH:mm:ss ---- */
 function formatTime(date: Date) {
     const pad = (n: number) => n.toString().padStart(2, "0");
     return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} ` +
         `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(date.getSeconds())}`;
 }
 
-/* ---- DATA STRING (ORDER IS CRITICAL) ---- */
 function buildDataString(data: {
     gameMode: string;
     gameId: string;
@@ -42,8 +40,8 @@ export async function POST() {
     const time = formatTime(new Date());
 
     const data = {
-        gameMode: "fun",       // 👈 DEMO
-        gameId: "1",           // 👈 demo game id
+        gameMode: "fun",
+        gameId: "1",
         lang: "en",
         playerId: "demo_user_1",
         country: "AM",
@@ -65,8 +63,8 @@ export async function POST() {
         },
         body: JSON.stringify({
             action: "getLauncherURL",
-            platform: 8,     // ⚠️ եթե քոնը ուրիշ է, փոխիր
-            partnerId: 1,    // ⚠️ եթե քոնը ուրիշ է, փոխիր
+            platform: 8,
+            partnerId: 1,
             time,
             hash,
             data,

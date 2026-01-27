@@ -19,6 +19,7 @@ import { useAccountLimit } from "@/src/hooks/useAccountLimit";
 
 import { useScrollTop } from "@/src/hooks/useScrollTop";
 import { useUser } from "@/src/context/UserContext";
+import {ProvidersStrip} from "@/src/components/ProvidersStrip/ProvidersStrip";
 
 export default function RootClient({ children }: { children: React.ReactNode }) {
     useScrollTop();
@@ -68,6 +69,7 @@ export default function RootClient({ children }: { children: React.ReactNode }) 
                 <>
                     <HeaderMenu />
                     <SliderSection />
+                    <ProvidersStrip/>
                     <TabsComponent />
                     <NavWrap />
                     <Footer />

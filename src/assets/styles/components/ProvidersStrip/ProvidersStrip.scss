@@ -1,0 +1,130 @@
+.providers-strip {
+  display: flex;
+  gap: 28px;
+  position: relative;
+  padding: 20px 0;
+  z-index: 5;
+  justify-content: space-between;
+}
+
+.provider-card {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 22px 26px;
+  border-radius: 18px;
+  background: linear-gradient(
+                  180deg,
+                  rgba(16, 20, 42, 0.95),
+                  rgba(7, 9, 22, 0.98)
+  );
+  box-shadow:
+          inset 0 0 0 1px rgba(255,255,255,0.04),
+          0 10px 30px rgba(0,0,0,0.6);
+
+  position: relative; // ⚠️ ՊԵՏՔԱ border-ի համար, ուրիշ բան չի փոխում
+  overflow: hidden;
+
+  .provider-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    color: white;
+  }
+
+  &:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, transparent, #ffd36a, transparent);
+    animation: top-move 4s linear infinite;
+  }
+}
+
+/* TEXT */
+
+.provider-label {
+  font-size: 12px;
+  letter-spacing: 1.4px;
+  opacity: 0.6;
+}
+
+.provider-value {
+  font-size: 26px;
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+/* ICON */
+
+.provider-icon img {
+  width: 56px;
+  height: 56px;
+  opacity: 0.85;
+}
+
+/* GLOW */
+
+.provider-card.gold .provider-value {
+  text-shadow: 0 0 14px rgba(255, 200, 0, 0.45);
+}
+
+.provider-card.diamond .provider-value {
+  text-shadow: 0 0 16px rgba(120, 210, 255, 0.6);
+}
+
+.provider-card .border-right {
+  position: absolute;
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, transparent, #ffd36a, transparent);
+  animation: right-move 4s linear infinite;
+  animation-delay: 1s;
+}
+
+.provider-card .border-bottom {
+  position: absolute;
+  bottom: 0;
+  right: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg, transparent, #ffd36a, transparent);
+  animation: bottom-move 4s linear infinite;
+  animation-delay: 2s;
+}
+
+.provider-card .border-left {
+  position: absolute;
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(0deg, transparent, #ffd36a, transparent);
+  animation: left-move 4s linear infinite;
+  animation-delay: 3s;
+}
+@keyframes top-move {
+  from { left: -100%; }
+  to { left: 100%; }
+}
+
+@keyframes right-move {
+  from { top: -100%; }
+  to { top: 100%; }
+}
+
+@keyframes bottom-move {
+  from { right: -100%; }
+  to { right: 100%; }
+}
+
+@keyframes left-move {
+  from { bottom: -100%; }
+  to { bottom: 100%; }
+}
