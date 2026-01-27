@@ -1,3 +1,5 @@
+@use '../../mixin' as *;
+
 .providers-strip {
   display: flex;
   gap: 28px;
@@ -5,6 +7,16 @@
   padding: 20px 0;
   z-index: 5;
   justify-content: space-between;
+  @include screen-max-width-1200 {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    gap: 20px;
+    padding-bottom: 16px;
+  }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .provider-card {
@@ -23,8 +35,19 @@
           inset 0 0 0 1px rgba(255,255,255,0.04),
           0 10px 30px rgba(0,0,0,0.6);
 
-  position: relative; // ⚠️ ՊԵՏՔԱ border-ի համար, ուրիշ բան չի փոխում
+  position: relative;
   overflow: hidden;
+  @include screen-max-width-1200 {
+    scroll-snap-align: start;
+    min-width: 420px; // desktop slide width
+    flex: 0 0 auto;
+  }
+  @include screen-max-width-767 {
+    min-width: calc(50% - 14px);
+  }
+  @include screen-max-width-567 {
+    min-width: calc(50% - 14px);
+  }
 
   .provider-info {
     display: flex;
