@@ -66,7 +66,7 @@ export const NavWrap = ({onLoginClick}: Props) => {
                             <li className="deposit-li">
                                 <button className="wallet-btn" onClick={handleDepositClick}>
                                     <Image
-                                        src={isLoggedIn ? "/deposit.svg" : "/deposit-logo1.png"}
+                                        src={isLoggedIn ? "/deposit.svg" : "/deposit-logo2.png"}
                                         alt="wallet icon"
                                         width={100}
                                         height={100}
