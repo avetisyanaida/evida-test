@@ -24,63 +24,64 @@ export const NavWrap = () => {
     return <>
         {isTabletLarge ? (
             <section style={{backgroundColor: "#140854"}} className={'nav-wrap-bottom'}>
-                <div className="container">
-                    <nav>
-                        <ul>
-                            <li>
-                                <button onClick={() => {setOpenTabsList(!openTabsList)}}>
-                                    <i className={'icon menu'}></i>
-                                    Menu
-                                </button>
-                            </li>
-                            <li>
-                                <button onClick={handleClick}>
-                                    <i className={'icon casino'}></i>
-                                    {t('casino')}
-                                </button>
-                            </li>
-                            <li>
-                                <button className={'wallet-btn'} onClick={() => router.push('/profile/wallet')}>
-                                    <i className={'icon wallet'}></i>
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <i className={'icon live-casino'}></i>
-                                    {t('liveCasino')}
-                                </button>
-                            </li>
-                            <li>
-                                <button>
-                                    <i className={'icon balloon'}></i>
-                                    {t('balloon')}
-                                </button>
-                            </li>
-                        </ul>
-                    </nav>
-                    {openTabsList && (
-                        <ModalComponent title={''} onClose={() => setOpenTabsList(false)}>
-                            <div className="tabs-list">
-                                <ul>
-                                    <li>
-                                        <a href="#" onClick={handleClick}>
-                                            {t("casino")}
-                                        </a>
-                                    </li>
-                                    <li><a href="#">{t("liveCasino")}</a></li>
-                                    <li><a href="#">{t("tvGames")}</a></li>
-                                    <li><a href="#">{t("casinoTour")}</a></li>
-                                    <li><a href="#">{t("blot")}</a></li>
-                                    <li><a href="#">{t("balloon")}</a></li>
-                                    <li><a href="#">{t("tournaments")}</a></li>
-                                    <li><a href="#">{t("promo")}</a></li>
-                                </ul>
+                <nav>
+                    <ul>
+                        <li>
+                            <button onClick={() => {
+                                setOpenTabsList(!openTabsList)
+                            }}>
+                                <i className={'icon menu'}></i>
+                                Menu
+                            </button>
+                        </li>
+                        <li>
+                            <button onClick={handleClick}>
+                                <i className={'icon casino'}></i>
+                                {t('casino')}
+                            </button>
+                        </li>
+                        <li className={'deposit-li'}>
+                            <span className={'wallet-btn'} onClick={() => router.push('/profile/wallet')}>
+                                <img src="/deposit.svg" alt="wallet icon" />
+                            </span>
+                            <button className={'deposit-text'}>Լիցքավորում</button>
+                        </li>
+                        <li>
+                            <button>
+                                <i className={'icon live-casino'}></i>
+                                {t('liveCasino')}
+                            </button>
+                        </li>
+                        <li>
+                            <button>
+                                <i className={'icon balloon'}></i>
+                                {t('balloon')}
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+                {openTabsList && (
+                    <ModalComponent title={''} onClose={() => setOpenTabsList(false)}>
+                        <div className="tabs-list">
+                            <ul>
+                                <li>
+                                    <a href="#" onClick={handleClick}>
+                                        {t("casino")}
+                                    </a>
+                                </li>
+                                <li><a href="#">{t("liveCasino")}</a></li>
+                                <li><a href="#">{t("tvGames")}</a></li>
+                                <li><a href="#">{t("casinoTour")}</a></li>
+                                <li><a href="#">{t("blot")}</a></li>
+                                <li><a href="#">{t("balloon")}</a></li>
+                                <li><a href="#">{t("tournaments")}</a></li>
+                                <li><a href="#">{t("promo")}</a></li>
+                            </ul>
 
-                            </div>
-                        </ModalComponent>
-                    )
-                    }
-                </div>
+                        </div>
+                    </ModalComponent>
+                )
+                }
             </section>
         ) : null}
     </>

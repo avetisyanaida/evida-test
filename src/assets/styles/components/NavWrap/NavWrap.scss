@@ -1,22 +1,47 @@
 @use '../../mixin' as *;
 .nav-wrap-bottom {
   width: 100%;
-  padding: 20px 0;
+  padding: 10px 0;
   position: fixed;
-  bottom: 10px;
+  bottom: 0;
   nav {
     ul {
+      position: fixed;
+      bottom: 0;
       display: flex;
+      z-index: calc(300 + 1);
       justify-content: space-between;
       align-items: center;
-      gap: 20px;
+      width: 100%;
+      height: 55px;
+      min-height: 55px;
+      padding: 35px 20px;
+      background: #18133b;
+      border-top: 1px solid #18133b;
+      .deposit-li {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
       li {
         width: calc(20% - 16px);
         .wallet-btn {
-          background-color: #37F168FF;
-          padding: 20px;
-          cursor: pointer;
-          border-radius: 20px;
+          position: absolute;
+          top: -25px;
+          left: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 60px;
+          height: 60px;
+          box-shadow: 0px -2px 8.5px 0px;
+          background: transparent;
+          border-radius: 50%;
+          translate: -50% 0;
+        }
+        .deposit-text {
+          margin-top: 26px;
         }
         button {
           display: flex;
@@ -34,7 +59,7 @@
             font-size: 13px;
           }
           @include screen-max-width-567 {
-            font-size: 12px;
+            font-size: 9px;
           }
           i {
             background-color: white;
