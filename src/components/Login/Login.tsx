@@ -80,7 +80,7 @@ export const Login = ({ onClose }: Props) => {
 
         try {
             const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-                redirectTo: "http://localhost:3000/reset",
+                redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/reset`,
             });
 
             if (error) {
