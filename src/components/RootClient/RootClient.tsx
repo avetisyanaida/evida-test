@@ -68,7 +68,7 @@ export default function RootClient({ children }: { children: React.ReactNode }) 
             {!isAdmin && showFullLayout && (
                 <>
                     <HeaderMenu />
-                    {/*<SliderSection />*/}
+                    <SliderSection />
                     <ProvidersStrip/>
                     <TabsComponent />
                     <NavWrap />

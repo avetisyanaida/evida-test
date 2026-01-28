@@ -23,20 +23,18 @@ export const SliderSection = () => {
 
     return (
         <section className="slider-section">
-            <div className="container">
-                <Slider {...settings} className="slider">
-                    {slides.map(slide => (
-                        <div key={slide.id}>
-                            <div
-                                className="slide-bg"
-                                style={{ backgroundImage: `url(${slide.image})` }}
-                            >
-                                {/*<h3>{slide.title}</h3>*/}
-                            </div>
-                        </div>
-                    ))}
-                </Slider>
-            </div>
+            <Slider {...settings} className="slider">
+                {slides.map(slide => (
+                    <div key={slide.id} className="slide">
+                        <img
+                            src={slide.image}
+                            alt={slide.title}
+                            loading="lazy"
+                        />
+                        {/* <h3>{slide.title}</h3> */}
+                    </div>
+                ))}
+            </Slider>
         </section>
     );
 };
