@@ -31,7 +31,7 @@ export const SliderSection = () => {
                         <Image
                             src={slide.image}
                             alt={slide.title}
-                            loading="lazy"
+                            // loading="lazy"
                             priority={slide.id === 1}
                             style={{ objectFit: "cover" }}
                             width={1200}

@@ -1,41 +1,52 @@
 'use client';
 
-import { useTranslation } from "react-i18next";
+import {useTranslation} from "react-i18next";
 import React from "react";
 import useBreakpoints from "../../hooks/useBreackPoints";
 import {useCasino} from "@/src/components/CasinoContext/CasinoContext";
 import {useRouter} from "next/navigation";
 
+interface HeaderMenuItem {
+    key: string;
+    provider?: string;
+}
+const HEADER_MENU: HeaderMenuItem[] = [
+    { key: "casino", provider: "allGames" },
+    { key: "liveCasino" },
+    { key: "tvGames" },
+    { key: "casinoTour" },
+    { key: "blot" },
+    { key: "balloon" },
+    { key: "tournaments" },
+    { key: "promo" },
+];
+
 export const HeaderMenu = () => {
-    const { setShowProviders } = useCasino();
-    const { t } = useTranslation();
+    const {setShowProviders} = useCasino();
+    const {t} = useTranslation();
     const {isTabletLarge} = useBreakpoints();
     const router = useRouter();
 
-    const handleClickCasino = (prov: string) => {
+    const handleClickCasino = (provider?: string) => {
+        if (!provider) return
         setShowProviders(true);
-        router.push(`?provider=${prov}`, { scroll: false });
+        router.push(`?provider=${provider}`, {scroll: false});
     };
+
+    if (isTabletLarge) return null;
 
     return (
         <div className="header-menu">
             <div className="container">
-                {!isTabletLarge ? (
-                    <ul>
-                        <li>
-                            <button onClick={() => handleClickCasino("allGames")}>
-                                {t("casino")}
+                <ul>
+                    {HEADER_MENU.map((item) => (
+                        <li key={item.key}>
+                            <button onClick={() => handleClickCasino(item.provider)}>
+                                {t(item.key)}
                             </button>
                         </li>
-                        <li><button>{t("liveCasino")}</button></li>
-                        <li><button>{t("tvGames")}</button></li>
-                        <li><button>{t("casinoTour")}</button></li>
-                        <li><button>{t("blot")}</button></li>
-                        <li><button>{t("balloon")}</button></li>
-                        <li><button>{t("tournaments")}</button></li>
-                        <li><button>{t("promo")}</button></li>
-                    </ul>
-                ): null}
+                    ))}
+                </ul>
             </div>
         </div>
     );
