@@ -175,19 +175,21 @@
     "demo": "Demo"
   },
   "loginModal": {
-    "title": "Login to your account",
-    "email": "Email address",
+    "title": "Login",
+    "email": "Email",
     "password": "Password",
-    "loginBtn": "Login",
+    "loginBtn": "Log in",
     "loading": "Logging in...",
     "forgot": "Forgot password?",
-    "back": "Back",
-    "resetTitle": "Enter your email to reset password:",
-    "resetBtn": "Get link",
+    "invalidCredentials": "Invalid email or password",
+    "error": "An error occurred during login",
+    "enterEmail": "Please enter your email address",
+    "rateLimit": "Too many attempts. Please try again later",
+    "resetSent": "Password reset link has been sent to your email",
+    "resetTitle": "Reset password",
+    "resetBtn": "Send reset link",
     "resetLoading": "Sending...",
-    "resetSent": "📧 Reset link has been sent to your email",
-    "enterEmail": "Please enter your email",
-    "error": "Something went wrong"
+    "back": "Back"
   },
   "protected": {
     "loading": "Please wait..."
