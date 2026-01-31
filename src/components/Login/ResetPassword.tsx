@@ -14,23 +14,27 @@ export default function ResetPassword() {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [msg, setMsg] = useState("");
+    const [msg, setMsg] = useState<string | null>(null);
     const [ready, setReady] = useState(false);
 
-    // 1️⃣ PKCE exchange
+    // 🔑 1. Exchange reset code → session
     useEffect(() => {
         const run = async () => {
+            // միշտ logout՝ որ սովորական browser-ով էլ աշխատի
+            await supabase.auth.signOut();
+
             const params = new URLSearchParams(window.location.search);
-            if (params.get("type") !== "recovery") {
-                router.replace("/");
+            const code = params.get("code");
+
+            if (!code) {
+                setMsg(t("reset.error"));
                 return;
             }
 
-            const { error } = await supabase.auth.exchangeCodeForSession(
-                window.location.search
-            );
+            const { error } = await supabase.auth.exchangeCodeForSession(code);
 
             if (error) {
+                console.error("RESET EXCHANGE ERROR:", error);
                 setMsg(t("reset.error"));
                 return;
             }
@@ -39,11 +43,13 @@ export default function ResetPassword() {
         };
 
         run();
-    }, [router, t]);
+    }, [t]);
 
-    if (!ready) return null;
+    if (!ready) {
+        return null; // կամ loader
+    }
 
-    // 2️⃣ update password
+    // 🔐 2. Update password
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -51,22 +57,26 @@ export default function ResetPassword() {
             setMsg(t("reset.fillFields"));
             return;
         }
+
         if (password !== confirmPassword) {
             setMsg(t("reset.notMatch"));
             return;
         }
+
         if (password.length < 6) {
             setMsg(t("reset.minLength"));
             return;
         }
 
         setLoading(true);
-        setMsg("");
+        setMsg(null);
 
         const { error } = await supabase.auth.updateUser({ password });
+
         setLoading(false);
 
         if (error) {
+            console.error("UPDATE PASSWORD ERROR:", error);
             setMsg(t("reset.error"));
             return;
         }
@@ -75,7 +85,7 @@ export default function ResetPassword() {
 
         setTimeout(async () => {
             await supabase.auth.signOut();
-            router.push("/login");
+            router.replace("/login");
         }, 1200);
     };
 
@@ -86,27 +96,33 @@ export default function ResetPassword() {
             {msg && <p>{msg}</p>}
 
             <form onSubmit={submit}>
-                <input
-                    type={showPassword ? "text" : "password"}
-                    placeholder={t("reset.newPassword")}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                />
-                <button type="button" onClick={() => setShowPassword(v => !v)}>
-                    👁
-                </button>
+                <div>
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder={t("reset.newPassword")}
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        autoComplete="new-password"
+                    />
+                    <button type="button" onClick={() => setShowPassword(v => !v)}>
+                        👁
+                    </button>
+                </div>
 
-                <input
-                    type={showConfirmPassword ? "text" : "password"}
-                    placeholder={t("reset.confirmPassword")}
-                    value={confirmPassword}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />
-                <button type="button" onClick={() => setShowConfirmPassword(v => !v)}>
-                    👁
-                </button>
+                <div>
+                    <input
+                        type={showConfirmPassword ? "text" : "password"}
+                        placeholder={t("reset.confirmPassword")}
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        autoComplete="new-password"
+                    />
+                    <button type="button" onClick={() => setShowConfirmPassword(v => !v)}>
+                        👁
+                    </button>
+                </div>
 
-                <button disabled={loading}>
+                <button type="submit" disabled={loading}>
                     {loading ? t("reset.saving") : t("reset.confirm")}
                 </button>
             </form>
