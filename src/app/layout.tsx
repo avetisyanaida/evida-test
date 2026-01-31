@@ -15,7 +15,7 @@ export default function RootLayout({ children }:PropsWithChildren) {
         <html lang="en">
         <head>
             <meta charSet="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" user-scalable={'no'} />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1 user-scalable={'no'}" />
             <link rel="icon" type="image/png" href="/logo-profile.png" />
             <title>EVIDA CASINO</title>
         </head>
