@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslation } from "react-i18next";
 import { supabase } from "@/src/hooks/supabaseClient";
@@ -9,71 +9,53 @@ export default function ResetPassword() {
     const { t } = useTranslation();
     const router = useRouter();
 
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
     const [loading, setLoading] = useState(false);
     const [msg, setMsg] = useState("");
+    const [isReady, setIsReady] = useState(false);
 
-    const [isRecovery, setIsRecovery] = useState<boolean | null>(null);
-
+    /* --------------------------------------------
+       1️⃣ Exchange code → session (PKCE REQUIRED)
+    --------------------------------------------- */
     useEffect(() => {
-        const hash = window.location.hash;
+        const exchangeSession = async () => {
+            const params = new URLSearchParams(window.location.search);
+            const type = params.get("type");
 
-        if (!hash) {
-            setIsRecovery(false);
-            return;
-        }
+            // ❌ եթե recovery չի → home
+            if (type !== "recovery") {
+                router.replace("/");
+                return;
+            }
 
-        const params = new URLSearchParams(hash.substring(1));
-        const type = params.get("type");
-
-        if (type === "recovery") {
-            setIsRecovery(true);
-        } else {
-            setIsRecovery(false);
-        }
-    }, []);
-
-    useEffect(() => {
-        if (isRecovery !== true) return;
-
-        const applyRecoverySession = async () => {
-            const hash = window.location.hash;
-            if (!hash.includes("access_token")) return;
-
-            const params = new URLSearchParams(hash.substring(1));
-            const access_token = params.get("access_token");
-            const refresh_token = params.get("refresh_token");
-
-            if (!access_token || !refresh_token) return;
-
-            const { error } = await supabase.auth.setSession({
-                access_token,
-                refresh_token,
-            });
+            const { error } = await supabase.auth.exchangeCodeForSession(
+                window.location.search
+            );
 
             if (error) {
-                console.error("SET SESSION ERROR:", error);
+                console.error("PKCE EXCHANGE ERROR:", error);
                 setMsg(t("reset.error"));
+                return;
             }
+
+            setIsReady(true);
         };
 
-        void applyRecoverySession();
-    }, [isRecovery, t]);
+        exchangeSession();
+    }, [router, t]);
 
-    useEffect(() => {
-        if (isRecovery === false) {
-            router.replace("/");
-        }
-    }, [isRecovery, router]);
-
-    if (isRecovery === null) {
+    if (!isReady) {
         return null; // կամ loader
     }
-    const handleUpdate = async (e: React.FormEvent) => {
+
+    /* --------------------------------------------
+       2️⃣ Update password
+    --------------------------------------------- */
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!password || !confirmPassword) {
@@ -94,12 +76,14 @@ export default function ResetPassword() {
         setLoading(true);
         setMsg("");
 
-        const { error } = await supabase.auth.updateUser({ password });
+        const { error } = await supabase.auth.updateUser({
+            password,
+        });
 
         setLoading(false);
 
         if (error) {
-            console.error(error);
+            console.error("UPDATE PASSWORD ERROR:", error);
             setMsg(t("reset.error"));
             return;
         }
@@ -108,60 +92,60 @@ export default function ResetPassword() {
 
         setTimeout(async () => {
             await supabase.auth.signOut();
-            router.push("/admin");
+            router.push("/login");
         }, 1200);
     };
 
     return (
-        <div className={'reset-password-wrapper'}>
-            <h2 style={{ marginBottom: "20px" }}>{t("reset.title")}</h2>
+        <div className="reset-password-wrapper">
+            <h2>{t("reset.title")}</h2>
+
             {msg && (
-                <p style={{marginBottom: "20px", color: msg.includes("success") ? "#4ade80" : "#ff4d4d",}}>
+                <p
+                    style={{
+                        marginBottom: 20,
+                        color: msg.includes("success") ? "#4ade80" : "#ff4d4d",
+                    }}
+                >
                     {msg}
                 </p>
             )}
-            <form onSubmit={handleUpdate}>
-                <div className={'form-wrapper'}>
+
+            <form onSubmit={handleSubmit}>
+                <div className="form-wrapper">
                     <input
                         type={showPassword ? "text" : "password"}
-                        autoComplete="new-password"
                         placeholder={t("reset.newPassword")}
+                        autoComplete="new-password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        required
                     />
                     <i
                         className={showPassword ? "icon eye-open" : "icon eye-close"}
-                        onClick={() => setShowPassword(!showPassword)}
+                        onClick={() => setShowPassword((v) => !v)}
                     />
                 </div>
 
-                <div className={'form-wrapper'}>
+                <div className="form-wrapper">
                     <input
                         type={showConfirmPassword ? "text" : "password"}
-                        autoComplete="new-password"
                         placeholder={t("reset.confirmPassword")}
+                        autoComplete="new-password"
                         value={confirmPassword}
                         onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
                     />
                     <i
                         className={
                             showConfirmPassword ? "icon eye-open" : "icon eye-close"
                         }
-                        onClick={() =>
-                            setShowConfirmPassword(!showConfirmPassword)
-                        }
+                        onClick={() => setShowConfirmPassword((v) => !v)}
                     />
                 </div>
 
                 <button
-                    className={'form-wrapper-button'}
+                    className="form-wrapper-button"
                     type="submit"
                     disabled={loading}
-                    style={{
-                        cursor: loading ? "not-allowed" : "pointer",
-                    }}
                 >
                     {loading ? t("reset.saving") : t("reset.confirm")}
                 </button>
