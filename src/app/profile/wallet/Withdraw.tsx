@@ -146,7 +146,7 @@ export default function Withdraw({
             <label>
                 <input
                     type="number"
-                    placeholder={t("withdrawAmountPlaceholder")}
+                    placeholder={t("money")}
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                 />

@@ -17,7 +17,7 @@ export default function MyBalance({ balance }: MyBalanceProps) {
             </div>
 
             <p>{t("totalPlayableAmount")}</p>
-            <span>{balance.toLocaleString("de-DE")} AMD</span>
+            <span>{balance.toLocaleString("de-DE")} {t("money")}</span>
         </div>
     );
 }

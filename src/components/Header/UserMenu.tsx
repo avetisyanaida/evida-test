@@ -1,5 +1,6 @@
 import React, {type RefObject} from "react";
 import Image from "next/image";
+import {useTranslation} from "react-i18next";
 
 interface UserMenuProps {
     userName?: string;
@@ -8,7 +9,6 @@ interface UserMenuProps {
     showPopover: boolean;
     togglePopover: () => void;
     popoverRef: RefObject<HTMLDivElement | null>;
-    t: (key: string) => string;
     onMyCards: () => void;
     onBonuses: () => void;
     onPersonalData: () => void;
@@ -33,7 +33,6 @@ export const UserMenu = ({
                              showPopover,
                              togglePopover,
                              popoverRef,
-                             t,
                              onMyCards,
                              onBonuses,
                              onPersonalData,
@@ -44,11 +43,12 @@ export const UserMenu = ({
                              onWithdraw,
                              onHistory,
                          }: UserMenuProps) => {
+    const {t} = useTranslation();
     return (
         <li className="profile-title-img">
             <p className="profiles-width">{userName}</p>
             <button className="profiles-width">
-                {formatBalance(balance)} AMD
+                {formatBalance(balance)} {t("money")}
             </button>
             <button className="profile-img" onClick={togglePopover}>
                 <a href="#">

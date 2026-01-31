@@ -140,11 +140,11 @@ export default function Balance() {
                 <ul>
                     <li>
                         {t("balance")}
-                        <p>{balance.toLocaleString("de-DE")} AMD</p>
+                        <p>{balance.toLocaleString("de-DE")} {t("money")}</p>
                     </li>
                     <li>
                         {t("bonusBalance")}
-                        <p>0 AMD</p>
+                        <p>0 {t("money")}</p>
                     </li>
                 </ul>
             </div>

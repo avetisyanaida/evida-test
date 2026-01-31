@@ -86,7 +86,7 @@ export const TransactionHistory = () => {
                         </td>
 
                         <td data-label={t("transactions.amount")}>
-                            {tx.amount.toLocaleString()} ֏
+                            {tx.amount.toLocaleString()} {t("money")}
                         </td>
 
                         <td data-label={t("transactions.method")}>

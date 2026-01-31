@@ -217,7 +217,6 @@ export const Header = ({
                                     showPopover={showPopover}
                                     togglePopover={togglePopover}
                                     popoverRef={popoverRef}
-                                    t={t}
                                     onMyCards={handleMyCards}
                                     onBonuses={handleBonuses}
                                     onPersonalData={onPersonalData}
@@ -237,13 +236,11 @@ export const Header = ({
                 ) : (
                     <ul className="user-info">
                         {!isLoggedIn ? (
-                            <li>
                                 <AuthButtons
                                     onLoginClick={onLoginClick}
                                     onSignupClick={onSignupClick}
                                     t={t}
                                 />
-                            </li>
                         ) : (
                             <>
                                 <UserMenu
@@ -253,7 +250,6 @@ export const Header = ({
                                     showPopover={showPopover}
                                     togglePopover={togglePopover}
                                     popoverRef={popoverRef}
-                                    t={t}
                                     onMyCards={handleMyCards}
                                     onBonuses={handleBonuses}
                                     onPersonalData={onPersonalData}
@@ -264,6 +260,7 @@ export const Header = ({
                                     onWithdraw={onWithdraw}
                                     onHistory={handleHistory}
                                 />
+                                <LangSwitcher/>
                             </>
                         )}
                     </ul>

@@ -12,8 +12,8 @@ const slides = [
     },
     {
         id: 2,
-        desktop: "/bonus-camp1.png",
-        mobile: "/bonus-camp1.png",
+        desktop: "/bonus-camp3.png",
+        mobile: "/bonus-camp3.png",
         title: "Խաղա ու շահիր",
     },
     {
