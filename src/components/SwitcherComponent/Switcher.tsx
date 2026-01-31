@@ -48,13 +48,13 @@ export const LangSwitcher = () => {
 
             {open && (
                 <div className="lang-menu">
-                    <button onClick={() => changeLang("en")}>
+                    <button className={'lang-btn'} onClick={() => changeLang("en")}>
                         <i className="icon usa" /> EN
                     </button>
-                    <button onClick={() => changeLang("ru")}>
+                    <button className={'lang-btn'} onClick={() => changeLang("ru")}>
                         <i className="icon russia" /> RU
                     </button>
-                    <button onClick={() => changeLang("hy")}>
+                    <button className={'lang-btn'} onClick={() => changeLang("hy")}>
                         <i className="icon armenia" /> HY
                     </button>
                 </div>

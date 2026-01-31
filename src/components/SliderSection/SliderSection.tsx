@@ -57,6 +57,7 @@ export const SliderSection = () => {
                 {slides.map((_, i) => (
                     <button
                         key={i}
+                        aria-label={`Go to slide ${i + 1}`}
                         className={i === index ? "active" : ""}
                         onClick={() => setIndex(i)}
                     />

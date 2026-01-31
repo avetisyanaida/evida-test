@@ -168,6 +168,12 @@
           right: 0;
         }
       }
+      .lang-dropdown {
+        .lang-selected {
+          background-color: transparent;
+          padding: 0;
+        }
+      }
     }
   }
 }
