@@ -1,111 +1,48 @@
-@use '../../mixin' as *;
-
-.slider-section {
+.hero-slider {
   position: relative;
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  overflow: hidden;
   background: #000;
-  padding: 40px 0;
-  width: 100%;
-  @include screen-max-width-767 {
-    padding: 0;
-  }
-
-  .slide {
-    position: relative;
-    width: 100%;
-    height: 408px;
-    overflow: hidden;
-
-    @include screen-max-width-1200 {
-      height: 337px;
-    }
-
-    @include screen-max-width-767 {
-      height: 180px;
-    }
-  }
-
-  .slide-image {
-    object-fit: cover;
-    object-position: center;
-    @include screen-max-width-1500 {
-      object-fit: contain;
-    }
-  }
-
-  .slider {
-    h3 {
-      text-align: center;
-      color: white;
-      margin-top: 15px;
-      font-size: 20px;
-    }
-
-    &::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      border-radius: 8px;
-      background: linear-gradient(
-                      to top,
-                      rgba(0, 0, 0, 0.55),
-                      rgba(0, 0, 0, 0.1)
-      );
-      pointer-events: none;
-    }
-  }
 }
 
-.slick-slide {
-  img {
-    cursor: pointer;
-  }
+.hero-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.6s ease;
 }
 
-/* slick arrows hide */
-.slick-prev {
-  display: none;
-
-  &:before {
-    display: none;
-  }
+.hero-slide.active {
+  opacity: 1;
+  z-index: 1;
 }
 
-.slick-next {
-  display: none;
-
-  &:before {
-    display: none;
-  }
+.hero-image {
+  object-fit: contain;
+  background-color: #000;
 }
 
-/* slick fixes */
-.slider,
-.slick-list,
-.slick-track,
-.slick-slide,
-.slick-slide > div {
-  height: 100%;
+/* dots */
+.hero-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 2;
 }
 
-.slick-track {
-  width: 100%;
-  height: 100%;
+.hero-dots button {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
 }
 
-.slick-prev,
-.slick-next {
-  display: none !important;
-}
-
-.slick-arrow {
-  display: none !important;
-}
-.slick-dots {
-  li {
-    button {
-      &:before {
-        color: white;
-      }
-    }
-  }
+.hero-dots button.active {
+  background: #ff0033;
 }

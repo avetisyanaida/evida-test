@@ -1,51 +1,66 @@
 'use client';
 
-import dynamic from "next/dynamic";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-
-const Slider = dynamic(() => import("react-slick"), {
-    ssr: false,
-});
+const slides = [
+    {
+        id: 1,
+        desktop: "/bonus-camp.png",
+        mobile: "/bonus-camp.png",
+        title: "Բարի գալուստ մեր կայք",
+    },
+    {
+        id: 2,
+        desktop: "/bonus-camp1.png",
+        mobile: "/bonus-camp1.png",
+        title: "Խաղա ու շահիր",
+    },
+    {
+        id: 3,
+        desktop: "/bonus-camp2.png",
+        mobile: "/bonus-camp2.png",
+        title: "Մասնակցիր մրցաշարերին",
+    },
+];
 
 export const SliderSection = () => {
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 4000,
-        adaptiveHeight: false,
-        arrows: false,
-    };
+    const [index, setIndex] = useState(0);
 
-    const slides = [
-        { id: 1, image: "/bonus-camp.png", title: "Բարի գալուստ մեր կայք" },
-        { id: 2, image: "/bonus-camp2.png", title: "Խաղա ու շահիր" },
-        { id: 3, image: "/bonus-camp3.png", title: "Մասնակցիր մրցաշարերին" },
-    ];
+    useEffect(() => {
+        const timer = setInterval(() => {
+            setIndex((prev) => (prev + 1) % slides.length);
+        }, 5000);
+
+        return () => clearInterval(timer);
+    }, []);
 
     return (
-        <section className="slider-section">
-            <div className="slider-wrapper">
-                <Slider {...settings}>
-                    {slides.map(slide => (
-                        <div key={slide.id} className="slide">
-                            <Image
-                                src={slide.image}
-                                alt={slide.title}
-                                fill
-                                priority={slide.id === 1}
-                                sizes="100vw"
-                                className="slide-image"
-                            />
-                        </div>
-                    ))}
-                </Slider>
+        <section className="hero-slider">
+            {slides.map((slide, i) => (
+                <div
+                    key={slide.id}
+                    className={`hero-slide ${i === index ? "active" : ""}`}
+                >
+                    <Image
+                        src={slide.desktop}
+                        alt={slide.title}
+                        fill
+                        priority={i === 0}
+                        sizes="(max-width: 768px) 100vw, 1920px"
+                        className="hero-image"
+                    />
+                </div>
+            ))}
+
+            <div className="hero-dots">
+                {slides.map((_, i) => (
+                    <button
+                        key={i}
+                        className={i === index ? "active" : ""}
+                        onClick={() => setIndex(i)}
+                    />
+                ))}
             </div>
         </section>
     );
