@@ -187,8 +187,10 @@ export const Header = ({
                     <Image
                         src={!isMobile ? "/logo2.png" : "/logo.png"}
                         alt="logo"
+                        loading="eager"
                         width={100}
                         height={100}
+                        priority={false}
                     />
                 </button>
 

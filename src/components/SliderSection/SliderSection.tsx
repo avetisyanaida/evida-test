@@ -24,9 +24,9 @@ export const SliderSection = () => {
     };
 
     const slides = [
-        { id: 1, image: "/bonus-camp.webp", title: "Բարի գալուստ մեր կայք" },
-        { id: 2, image: "/bonus-camp2.webp", title: "Խաղա ու շահիր" },
-        { id: 3, image: "/bonus-camp3.webp", title: "Մասնակցիր մրցաշարերին" },
+        { id: 1, image: "/bonus-camp.png", title: "Բարի գալուստ մեր կայք" },
+        { id: 2, image: "/bonus-camp2.png", title: "Խաղա ու շահիր" },
+        { id: 3, image: "/bonus-camp3.png", title: "Մասնակցիր մրցաշարերին" },
     ];
 
     return (
@@ -38,9 +38,8 @@ export const SliderSection = () => {
                             <Image
                                 src={slide.image}
                                 alt={slide.title}
-                                priority={slide.id === 1} // 🔥 LCP fix
-                                width={1200}
-                                height={500}
+                                priority={slide.id === 1}
+                                fill
                                 sizes="100vw"
                                 style={{ objectFit: "cover" }}
                             />

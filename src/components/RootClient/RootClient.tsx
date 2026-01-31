@@ -56,7 +56,7 @@ export default function RootClient({ children }: PropsWithChildren) {
                 />
             )}
 
-            {(loading || limitLoading) && (
+            {loading || limitLoading && (
                 <div style={{
                     position: "fixed",
                     inset: 0,
