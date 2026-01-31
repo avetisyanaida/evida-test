@@ -69,7 +69,9 @@ img {
   margin: 0;
   padding: 0;
 }
-
+.slick-dots {
+  padding: 10px 0;
+}
 .slick-dots li button:before {
   color: #ccc;
   opacity: 1;
