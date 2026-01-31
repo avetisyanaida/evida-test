@@ -3,6 +3,7 @@ import "@/src/assets/styles/index.scss";
 import "@/src/assets/styles/mixin.scss";
 import "@/src/assets/styles/variables.scss";
 import "@/src/assets/icons/icon.css";
+import "@/src/assets/styles/globalSlider.css";
 import "@/src/i18n";
 import type {PropsWithChildren} from "react";
 import RootClient from "@/src/components/RootClient/RootClient";
