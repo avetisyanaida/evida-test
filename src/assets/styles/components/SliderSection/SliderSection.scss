@@ -101,3 +101,10 @@
   width: 100%;
 }
 
+.slick-prev,
+.slick-next {
+  display: none !important;
+}
+.slick-arrow {
+  display: none !important;
+}
