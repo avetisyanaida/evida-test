@@ -28,6 +28,7 @@
 @use "components/admin/VerificationAdmin";
 @use "components/admin/login/AdminLoginForm";
 @use "components/ChatUser/ChatUser";
+@use "components/Login/ResetPassword";
 
 @use 'components/deposit-saved-card/deposit-saved-card';
 @use 'components/withdrawAdmin/withdrawAdmin';
