@@ -73,6 +73,7 @@
   "phone": "Номер телефона",
   "firstName": "Имя",
   "lastName": "Фамилия",
+  "gender": "Пол",
   "female": "Женский",
   "male": "Мужской",
   "day": "День",
@@ -259,5 +260,75 @@
     "processing": "Обработка...",
     "addCarded": "Добавить карту",
     "close": "Закрыть"
+  },
+  "more": "Подробнее",
+  "depositSuccess": "✅ Баланс успешно пополнен",
+  "depositErrors": {
+    "minAmount": "❌ Минимальная сумма пополнения 200 AMD",
+    "savedCardFailed": "❌ Ошибка при оплате сохранённой картой",
+    "general": "❌ Ошибка во время пополнения"
+  },
+  "depositInfo": {
+    "card": {
+      "stepsTitle": "Для пополнения игрового счёта картой ARCA/VISA/MASTER:",
+      "step1": "Введите сумму",
+      "step2": "Нажмите «Подтвердить»",
+      "savedCardNote": "*В дальнейшем вы сможете выбрать карту, с которой ранее пополняли счёт.",
+      "redirectTitle": "Вы будете перенаправлены на страницу оплаты:",
+      "redirectStep1": "Введите данные карты (номер, срок действия, имя владельца, CVV)",
+      "redirectStep2": "Следуйте инструкциям",
+      "redirectStep3": "Подтвердите платёж"
+    }
+  },
+  "withdrawTitle": "Вывод средств",
+  "withdrawSelectPlaceholder": "Выберите метод",
+  "withdrawAmountPlaceholder": "Сумма (AMD)",
+
+  "withdrawMethods": {
+    "card": "Карта (MasterCard / Visa)",
+    "idram": "Idram",
+    "telcell": "Telcell"
+  },
+
+  "withdrawSuccess": "✅ Запрос на вывод отправлен",
+
+  "withdrawErrors": {
+    "notLoggedIn": "Вы не вошли в систему",
+    "invalidAmount": "Введите корректную сумму",
+    "noCard": "Выберите карту или добавьте новую",
+    "failed": "Ошибка вывода средств",
+    "server": "Ошибка сервера"
+  },
+  "transactions": {
+    "loading": "Загрузка…",
+    "empty": "Транзакций пока нет",
+    "title": "История транзакций",
+
+    "type": "Тип",
+    "amount": "Сумма",
+    "method": "Метод",
+    "status": "Статус",
+    "date": "Дата",
+
+    "types": {
+      "deposit": "Пополнение",
+      "withdraw": "Вывод"
+    },
+
+    "methods": {
+      "card": "Карта",
+      "idram": "Idram",
+      "telcell": "Telcell"
+    },
+
+    "statuses": {
+      "pending": "В обработке",
+      "approved": "Подтверждено",
+      "rejected": "Отклонено"
+    },
+
+    "prev": "Назад",
+    "next": "Вперёд",
+    "page": "Страница"
   }
 }

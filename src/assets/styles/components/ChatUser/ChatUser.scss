@@ -1,11 +1,11 @@
 .chat-wrapper {
   position: fixed;
-  bottom: 80px;
-  right: 28px;
+  bottom: 78px;
+  right: 10px;
   width: 350px;
   background: #0b0b0b;
   color: #fff;
-  border-radius: 50%;
+  border-radius: 20px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.5);
   padding: 10px;
   display: flex;
@@ -68,8 +68,8 @@
 }
 .floating-btn {
   position: fixed;
-  bottom: 80px;
-  right: 28px;
+  bottom: 78px;
+  right: 19px;
   background: #18133BFF;
   color: #fff;
   border: none;

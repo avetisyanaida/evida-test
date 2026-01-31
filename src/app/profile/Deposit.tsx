@@ -1,12 +1,12 @@
-import {useState, useEffect} from "react";
-import {useTranslation} from "react-i18next";
-import {supabase} from "@/src/hooks/supabaseClient";
-import {useCasino} from "@/src/components/CasinoContext/CasinoContext";
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { supabase } from "@/src/hooks/supabaseClient";
+import { useCasino } from "@/src/components/CasinoContext/CasinoContext";
 
 interface DepositProps {
     onClose: () => void;
     onBalanceUpdate: (newBalance: number) => void;
-    mode: "card" | "idram" | "telcell"
+    mode: "card" | "idram" | "telcell";
 }
 
 interface SavedCard {
@@ -16,19 +16,17 @@ interface SavedCard {
     provider: string;
 }
 
-export default function Deposit({onClose, mode}: DepositProps) {
+export default function Deposit({ onClose, mode }: DepositProps) {
     const [amount, setAmount] = useState("");
     const [text, setText] = useState("");
     const [provider] = useState("idram");
-    const {t} = useTranslation();
-    const {showMoreInfo, setShowMoreInfo} = useCasino();
+
+    const { t } = useTranslation();
+    const { showMoreInfo, setShowMoreInfo } = useCasino();
 
     const [savedCards, setSavedCards] = useState<SavedCard[]>([]);
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
     const [cardsOpen, setCardsOpen] = useState(false);
-
-
-
 
     useEffect(() => {
         if (mode !== "card") return;
@@ -50,9 +48,8 @@ export default function Deposit({onClose, mode}: DepositProps) {
             }
         };
 
-        loadCards().then(() => {});
+        loadCards();
     }, [mode]);
-
 
     // eslint-disable-next-line react-hooks/set-state-in-effect
     useEffect(() => setText(""), [amount, provider]);
@@ -61,7 +58,7 @@ export default function Deposit({onClose, mode}: DepositProps) {
         const num = Number(amount);
 
         if (!num || num < 200) {
-            setText("❌ Գումարը պետք է լինի առնվազն 200 AMD");
+            setText(t("depositErrors.minAmount"));
             return;
         }
 
@@ -70,12 +67,11 @@ export default function Deposit({onClose, mode}: DepositProps) {
             const user = userData?.user;
 
             if (!user) {
-                setText("Մուտք գործիր, հետո նոր փորձիր");
+                setText(t("loginRequired"));
                 return;
             }
 
             if (mode === "card") {
-
                 if (selectedCardId) {
                     const res = await fetch("/api/payments/deposit-saved-card", {
                         method: "POST",
@@ -88,9 +84,9 @@ export default function Deposit({onClose, mode}: DepositProps) {
                     });
 
                     if (res.ok) {
-                        setText("✅ Հաշիվը հաջողությամբ համալրվել է");
+                        setText(t("depositSuccess"));
                     } else {
-                        setText("❌ Սխալ պահպանված քարտով վճարման ժամանակ");
+                        setText(t("depositErrors.savedCardFailed"));
                     }
                     return;
                 }
@@ -124,38 +120,44 @@ export default function Deposit({onClose, mode}: DepositProps) {
             if (data.redirectUrl) {
                 window.location.href = data.redirectUrl;
             }
-
-        } catch (err: any) {
+        } catch (err) {
             console.error("Deposit error:", err);
-            setText("❌ Սխալ կատարման ընթացքում");
+            setText(t("depositErrors.general"));
         }
     };
-
 
     return (
         <div className="deposit-wallet">
             {mode === "card" && (
                 <>
                     <h3>{t("arcaDescription")}</h3>
-                    <h4 style={{color: 'red'}}>{t("lawNote")}</h4>
-                    <div className={'more-info-card'}>
-                        <button onClick={() => setShowMoreInfo(!showMoreInfo)}
-                                className={'btn-more-info'}>{showMoreInfo ? "Փակել" : "Ավելին"}</button>
+                    <h4 style={{ color: "red" }}>{t("lawNote")}</h4>
+
+                    <div className={"more-info-card"}>
+                        <button
+                            onClick={() => setShowMoreInfo(!showMoreInfo)}
+                            className={"btn-more-info"}
+                        >
+                            {showMoreInfo ? t("close") : t("more")}
+                        </button>
 
                         {showMoreInfo && (
-                            <div className={'more-info'}>
-                                <h5 style={{color: 'grey'}}>ARCA/VISA/MASTER քարտով խաղային հաշիվը համալրելու համար՝ <br/>
-                                    1. Նշեք գումարը <br/>
-                                    2. սեղմեք Հաստատել
+                            <div className={"more-info"}>
+                                <h5 style={{ color: "grey" }}>
+                                    {t("depositInfo.card.stepsTitle")} <br />
+                                    1. {t("depositInfo.card.step1")} <br />
+                                    2. {t("depositInfo.card.step2")}
                                 </h5>
-                                <h5 style={{color: 'grey'}}>*Հետագայում քարտերի ցանկից կարող եք ընտրել այն քարտը, որով նախկինում կատարել եք
-                                    համալրում։</h5>
-                                <h5 style={{color: 'grey'}}>Դուք կուղղորդվեք վճարամիջոցի էջ՝ <br/>
-                                    1․ լրացրեք քարտի տվյալները՝ Համարը, վավեր․ ժամկետը, քարտապանի անունը, CVV2/CVC2 (քարտի
-                                    հակառակ կողմի
-                                    3 թվերը) <br/>
-                                    2. կատարեք քայլերը ըստ հրահանգների <br/>
-                                    3․ հաստատեք համալրումը
+
+                                <h5 style={{ color: "grey" }}>
+                                    {t("depositInfo.card.savedCardNote")}
+                                </h5>
+
+                                <h5 style={{ color: "grey" }}>
+                                    {t("depositInfo.card.redirectTitle")} <br />
+                                    1. {t("depositInfo.card.redirectStep1")} <br />
+                                    2. {t("depositInfo.card.redirectStep2")} <br />
+                                    3. {t("depositInfo.card.redirectStep3")}
                                 </h5>
                             </div>
                         )}
@@ -170,10 +172,12 @@ export default function Deposit({onClose, mode}: DepositProps) {
                                 <div className="card-summary">
                                     {selectedCardId
                                         ? (() => {
-                                            const card = savedCards.find(c => c.id === selectedCardId);
+                                            const card = savedCards.find(
+                                                (c) => c.id === selectedCardId
+                                            );
                                             return `${card?.brand} •••• ${card?.last4}`;
                                         })()
-                                        : "➕ Նոր քարտ"}
+                                        : `➕ ${t("addCard")}`}
                                 </div>
 
                                 <div className="arrow">
@@ -183,7 +187,7 @@ export default function Deposit({onClose, mode}: DepositProps) {
 
                             {cardsOpen && (
                                 <div className="card-select-body">
-                                    {savedCards.map(card => (
+                                    {savedCards.map((card) => (
                                         <div
                                             key={card.id}
                                             className={`card-option ${
@@ -191,7 +195,7 @@ export default function Deposit({onClose, mode}: DepositProps) {
                                             }`}
                                             onClick={() => {
                                                 setSelectedCardId(card.id);
-                                                setCardsOpen(false); // ընտրելուց հետո փակվում է
+                                                setCardsOpen(false);
                                             }}
                                         >
                                             {card.brand} •••• {card.last4}
@@ -207,61 +211,84 @@ export default function Deposit({onClose, mode}: DepositProps) {
                                             setCardsOpen(false);
                                         }}
                                     >
-                                        ➕ Նոր քարտ
+                                        ➕ {t("addCard")}
                                     </div>
                                 </div>
                             )}
                         </div>
                     )}
                 </>
-
             )}
 
             {mode === "idram" && (
                 <>
-                    <h2 style={{color: 'white', textAlign: "left"}}>IDram/IDBank</h2>
-                    <div className={'more-info-card'}>
-                        <button onClick={() => {
-                            setShowMoreInfo(!showMoreInfo);
-                        }}
-                                className={'btn-more-info'}>{showMoreInfo ? "Փակել" : "Ավելին"}</button>
+                    <h2 style={{ color: "white", textAlign: "left" }}>
+                        {t("idramTitle")}
+                    </h2>
+
+                    <div className={"more-info-card"}>
+                        <button
+                            onClick={() => setShowMoreInfo(!showMoreInfo)}
+                            className={"btn-more-info"}
+                        >
+                            {showMoreInfo ? t("close") : t("more")}
+                        </button>
+
                         {showMoreInfo && (
-                            <div className={'more-info'}>
-                                <h5 style={{color: 'red'}}>
-                                    Խաղային հաշվի համալրումը կկատարվի ԱյԴի Բանկում ունեցած Ձեր բանկային հաշվի միջոցով։
+                            <div className={"more-info"}>
+                                <h5 style={{ color: "red" }}>
+                                    {t("depositInfo.idram.main")}
                                 </h5>
-                                <h5 style={{color: 'grey'}}>Idram&IDBank (մոբայլ բանկինգ) հավելվածի միջոցով համալրում կատարելու համար անհրաժեշտ է
-                                    ծանոթանալ նոր պայմաններին և տալ Ձեր համաձայնությունը` սեղմելով «ՀԱՄԱՁԱՅՆ ԵՄ»:</h5>
-                                <h5 style={{color: 'grey'}}>Idram&IDBank մոբայլ բանկինգ հավելվածի միջոցով խաղային հաշիվը համալրելու համար՝ <br/>
-                                    1․ մուտքագրեք գումարի չափը <br/>
-                                    2. սեղմեք ՀԱՍՏԱՏԵԼ <br/>
+                                <h5 style={{ color: "grey" }}>
+                                    {t("depositInfo.idram.note")}
                                 </h5>
-                                <h5 style={{color: 'grey'}}>Դուք կտեղափոխվեք Idram&IDBank հավելված: Այստեղ՝
-                                    <br/> 1. մուտք գործեք Ձեր դրամապանակ <br/>
-                                    2. բացված էջում սեղմեք ՎՃԱՐԵԼ <br/>
-                                    3. մուտքագրեք Ձեր PIN կոդը և սեղմեք ՀԱՍՏԱՏԵԼ
+                                <h5 style={{ color: "grey" }}>
+                                    {t("depositInfo.idram.steps")}
+                                </h5>
+                                <h5 style={{ color: "grey" }}>
+                                    {t("depositInfo.idram.appSteps")}
                                 </h5>
                             </div>
                         )}
                     </div>
                 </>
             )}
+
             <label>
                 <input
-                    className={'no-spinner'}
+                    className={"no-spinner"}
                     type="number"
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
-                    placeholder="100 - 100.000 (AMD)"
+                    placeholder={t("amountPlaceholder")}
                 />
             </label>
 
             <div className="btn">
-                <button onClick={handleDeposit} style={{backgroundColor: '#d2c81b', color: 'black'}}>{t("ok")}</button>
-                <button onClick={onClose} style={{backgroundColor: '#211a4f'}}>{t("cancel")}</button>
+                <button
+                    onClick={handleDeposit}
+                    style={{ backgroundColor: "#d2c81b", color: "black" }}
+                >
+                    {t("ok")}
+                </button>
+                <button
+                    onClick={onClose}
+                    style={{ backgroundColor: "#211a4f" }}
+                >
+                    {t("cancel")}
+                </button>
             </div>
 
-            {text && <p style={{marginTop: 20, color: text.includes("❌") ? "red" : "green"}}>{text}</p>}
+            {text && (
+                <p
+                    style={{
+                        marginTop: 20,
+                        color: text.includes("❌") ? "red" : "green",
+                    }}
+                >
+                    {text}
+                </p>
+            )}
         </div>
     );
-};
+}

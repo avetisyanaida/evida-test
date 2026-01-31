@@ -73,6 +73,7 @@
   "phone": "Phone Number",
   "firstName": "First Name",
   "lastName": "Last Name",
+  "gender": "Gender",
   "female": "Female",
   "male": "Male",
   "day": "Day",
@@ -231,28 +232,23 @@
   },
   "footer": {
     "age_warning": "Warning: by participating in gambling games you may incur financial losses. Playing while intoxicated or under psychological pressure is strictly prohibited. Individuals under the age of 21 are not allowed to participate in online gambling.",
-
     "casino": "Casino",
     "slots": "Slots",
     "promos": "Promotions",
     "affiliate": "Become a partner",
     "bonuses": "Bonuses",
-
     "evida": "EVIDA.am",
     "license": "License",
     "privacy": "Privacy Policy",
     "about_us": "About Us",
     "terms": "Terms & Conditions",
-
     "info": "Information",
     "contact": "Contact Us",
     "notifications": "Notification Settings",
-
     "live_casino": "Live Casino",
     "blackjack": "Blackjack",
     "roulette": "Roulette",
     "poker": "Poker",
-
     "rights": "EVIDA © 2025 All rights reserved."
   },
   "attachCard": {
@@ -261,5 +257,87 @@
     "addCarded": "Add Card",
     "close": "Close",
     "noCard": "No Cards"
+  },
+  "more": "More",
+  "depositSuccess": "✅ Balance topped up successfully",
+  "depositErrors": {
+    "minAmount": "❌ Minimum deposit amount is 200 AMD",
+    "savedCardFailed": "❌ Error while paying with saved card",
+    "general": "❌ An error occurred during deposit"
+  },
+  "idramTitle": "IDram / IDBank",
+
+  "depositInfo": {
+    "card": {
+      "stepsTitle": "To top up your gaming account with ARCA/VISA/MASTER card:",
+      "step1": "Enter the amount",
+      "step2": "Click “Confirm”",
+      "savedCardNote": "*Later you can select a card that was previously used for deposits.",
+      "redirectTitle": "You will be redirected to the payment page:",
+      "redirectStep1": "Enter card details (number, expiry date, cardholder name, CVV)",
+      "redirectStep2": "Follow the instructions",
+      "redirectStep3": "Confirm the payment"
+    },
+    "idram": {
+      "main": "Your gaming account will be topped up using your IDBank bank account.",
+      "note": "To make a deposit via the Idram & IDBank mobile app, you must accept the new terms by clicking “AGREE”.",
+      "steps": "1. Enter the amount\n2. Click CONFIRM",
+      "appSteps": "You will be redirected to the Idram & IDBank app:\n1. Log in to your wallet\n2. Click PAY\n3. Enter your PIN code and confirm"
+    }
+  },
+  "withdrawTitle": "Withdraw",
+  "withdrawSelectPlaceholder": "Select method",
+  "withdrawAmountPlaceholder": "Amount (AMD)",
+
+  "withdrawMethods": {
+    "card": "Card (MasterCard / Visa)",
+    "idram": "Idram",
+    "telcell": "Telcell"
+  },
+
+  "withdrawSuccess": "✅ Withdrawal request submitted",
+
+  "withdrawErrors": {
+    "notLoggedIn": "You are not logged in",
+    "invalidAmount": "Enter a valid amount",
+    "noCard": "Select a card or add a new one",
+    "failed": "Withdrawal failed",
+    "server": "Server error"
+  },
+  "transactions": {
+    "loading": "Loading…",
+    "empty": "No transactions yet",
+    "title": "Transaction History",
+
+    "type": "Type",
+    "amount": "Amount",
+    "method": "Method",
+    "status": "Status",
+    "date": "Date",
+
+    "types": {
+      "deposit": "Deposit",
+      "withdraw": "Withdrawal"
+    },
+
+    "methods": {
+      "card": "Card",
+      "idram": "Idram",
+      "telcell": "Telcell"
+    },
+
+    "statuses": {
+      "pending": "Pending",
+      "approved": "Approved",
+      "rejected": "Rejected"
+    },
+
+    "prev": "Previous",
+    "next": "Next",
+    "page": "Page"
   }
 }
+
+
+
+

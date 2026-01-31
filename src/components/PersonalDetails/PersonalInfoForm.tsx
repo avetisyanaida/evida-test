@@ -105,7 +105,7 @@ export const PersonalInfoForm = ({
                 <CustomSelect
                     name="gender"
                     value={formsPersonal.gender}
-                    placeholder={'Սեռ'}
+                    placeholder={t('gender')}
                     options={[
                         {value: "female", label: t("female")},
                         {value: "male", label: t("male")},

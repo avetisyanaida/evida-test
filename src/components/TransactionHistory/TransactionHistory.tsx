@@ -3,8 +3,10 @@ import { useTransactions } from "@/src/hooks/useTransactions";
 import { useEffect } from "react";
 import { supabase } from "@/src/hooks/supabaseClient";
 import { RealtimeChannel } from "@supabase/realtime-js";
+import { useTranslation } from "react-i18next";
 
 export const TransactionHistory = () => {
+    const { t } = useTranslation();
     const { showHistory } = useCasino();
 
     const {
@@ -16,7 +18,6 @@ export const TransactionHistory = () => {
         nextPage,
         prevPage,
     } = useTransactions();
-
 
     useEffect(() => {
         if (!showHistory) return;
@@ -56,71 +57,78 @@ export const TransactionHistory = () => {
         };
     }, [showHistory, fetchTransactions]);
 
-    if (loading) return <p>Բեռնվում է…</p>;
-    if (!transactions.length) return <p style={{color: 'white'}}>Դեռ գործարքներ չկան</p>;
+    if (loading) return <p>{t("transactions.loading")}</p>;
+    if (!transactions.length)
+        return <p style={{ color: "white" }}>{t("transactions.empty")}</p>;
 
     return (
         <div className="tx-table-wrap">
-            <h2>Գործարքների պատմություն</h2>
+            <h2>{t("transactions.title")}</h2>
 
             <table className="tx-table">
                 <thead>
                 <tr>
-                    <th>Տեսակ</th>
-                    <th>Գումար</th>
-                    <th>Մեթոդ</th>
-                    <th>Կարգավիճակ</th>
-                    <th>Ամսաթիվ</th>
+                    <th>{t("transactions.type")}</th>
+                    <th>{t("transactions.amount")}</th>
+                    <th>{t("transactions.method")}</th>
+                    <th>{t("transactions.status")}</th>
+                    <th>{t("transactions.date")}</th>
                 </tr>
                 </thead>
 
                 <tbody>
                 {transactions.map((tx) => (
                     <tr key={tx.id}>
-                        <td data-label="Տեսակ">
-                            {tx.type === "deposit" ? "Լիցքավորում" : "Կանխիկացում"}
+                        <td data-label={t("transactions.type")}>
+                            {tx.type === "deposit"
+                                ? t("transactions.types.deposit")
+                                : t("transactions.types.withdraw")}
                         </td>
 
-                        <td data-label="Գումար">
+                        <td data-label={t("transactions.amount")}>
                             {tx.amount.toLocaleString()} ֏
                         </td>
 
-                        <td data-label="Մեթոդ">
+                        <td data-label={t("transactions.method")}>
                             {tx.method === "card"
-                                ? "Քարտ"
+                                ? t("transactions.methods.card")
                                 : tx.method === "idram"
-                                    ? "Idram"
-                                    : "Telcell"}
+                                    ? t("transactions.methods.idram")
+                                    : t("transactions.methods.telcell")}
                         </td>
 
-                        <td data-label="Կարգավիճակ">
-                            <span className={`status ${tx.status}`}>
-                                {tx.status === "pending"
-                                    ? "Մշակվում է"
-                                    : tx.status === "approved"
-                                        ? "Հաստատված"
-                                        : "Մերժված"}
-                            </span>
+                        <td data-label={t("transactions.status")}>
+                <span className={`status ${tx.status}`}>
+                  {tx.status === "pending"
+                      ? t("transactions.statuses.pending")
+                      : tx.status === "approved"
+                          ? t("transactions.statuses.approved")
+                          : t("transactions.statuses.rejected")}
+                </span>
                         </td>
 
-                        <td data-label="Ամսաթիվ">
-                            {new Date(tx.created_at).toLocaleString("hy-AM")}
+                        <td data-label={t("transactions.date")}>
+                            {new Date(tx.created_at).toLocaleString()}
                         </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
 
-            <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 20 }}>
+            <div
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    gap: 20,
+                    marginTop: 20,
+                }}
+            >
                 <button
-                    style={{
-                        padding: '5px',
-                        borderRadius: '5px',
-                    }}
+                    style={{ padding: "5px", borderRadius: "5px" }}
                     disabled={page === 1}
                     onClick={prevPage}
                 >
-                    ⬅ Նախորդ
+                    ⬅ {t("transactions.prev")}
                 </button>
 
                 <span
@@ -128,19 +136,18 @@ export const TransactionHistory = () => {
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
-                        color: 'white'
+                        color: "white",
                     }}
-                >Էջ {page}</span>
+                >
+          {t("transactions.page")} {page}
+        </span>
 
                 <button
-                    style={{
-                        padding: '5px',
-                        borderRadius: '5px',
-                    }}
+                    style={{ padding: "5px", borderRadius: "5px" }}
                     disabled={!hasMore}
                     onClick={nextPage}
                 >
-                    Հաջորդ ➡
+                    {t("transactions.next")} ➡
                 </button>
             </div>
         </div>

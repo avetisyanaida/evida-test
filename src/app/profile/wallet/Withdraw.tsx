@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/src/hooks/supabaseClient";
 import { CustomSelect } from "@/src/components/ui/CustomSelect";
 import { toast } from "react-toastify";
@@ -13,26 +14,27 @@ interface SavedCard {
 
 type WithdrawMethod = "card" | "idram" | "telcell";
 
-const withdrawMethodOptions: {
-    value: WithdrawMethod;
-    label: string;
-}[] = [
-    { value: "card", label: "MasterCard / Visa" },
-    { value: "idram", label: "Idram" },
-    { value: "telcell", label: "Telcell" },
-];
-
 export default function Withdraw({
                                      onCloseAction,
                                  }: {
     onCloseAction: () => void;
 }) {
+    const { t } = useTranslation();
+
+    const withdrawMethodOptions: {
+        value: WithdrawMethod;
+        label: string;
+    }[] = [
+        { value: "card", label: t("withdrawMethods.card") },
+        { value: "idram", label: t("withdrawMethods.idram") },
+        { value: "telcell", label: t("withdrawMethods.telcell") },
+    ];
+
     const [amount, setAmount] = useState("");
     const [method, setMethod] = useState<WithdrawMethod>("card");
     const [cards, setCards] = useState<SavedCard[]>([]);
     const [selectedCardId, setSelectedCardId] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
-
 
     useEffect(() => {
         (async () => {
@@ -56,25 +58,24 @@ export default function Withdraw({
         const userId = session?.session?.user?.id;
 
         if (!userId) {
-            toast.error("Դուք մուտք գործած չեք");
+            toast.error(t("withdrawErrors.notLoggedIn"));
             return;
         }
 
         const parsedAmount = Number(amount);
         if (!parsedAmount || parsedAmount <= 0) {
-            toast.warn("Մուտքագրիր ճիշտ գումար");
+            toast.warn(t("withdrawErrors.invalidAmount"));
             return;
         }
 
         if (method === "card" && !selectedCardId) {
-            toast.warn("Ընտրիր քարտ կամ ավելացրու նոր քարտ");
+            toast.warn(t("withdrawErrors.noCard"));
             return;
         }
 
         setLoading(true);
 
         try {
-            // 1️⃣ Ստեղծում ենք withdraw request
             const res = await fetch("/api/withdraw", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -89,11 +90,10 @@ export default function Withdraw({
             const json = await res.json();
 
             if (!res.ok || !json.success) {
-                toast.error(json.error || "Կանխիկացման սխալ");
+                toast.error(json.error || t("withdrawErrors.failed"));
                 return;
             }
 
-            // 2️⃣ Տելեգրամ նոթիֆիկացիա ադմինին
             await fetch("/api/notify-withdraw", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
@@ -105,10 +105,10 @@ export default function Withdraw({
                 }),
             });
 
-            toast.success("✅ Կանխիկացման հարցումը ուղարկվեց");
+            toast.success(t("withdrawSuccess"));
             onCloseAction();
         } catch (err) {
-            toast.error("Սերվերի սխալ");
+            toast.error(t("withdrawErrors.server"));
         } finally {
             setLoading(false);
         }
@@ -116,12 +116,12 @@ export default function Withdraw({
 
     return (
         <div className="withdraw">
-            <h3 style={{ margin: "15px 0" }}>Կանխիկացում</h3>
+            <h3 style={{ margin: "15px 0" }}>{t("withdrawTitle")}</h3>
 
             <CustomSelect
                 name="withdrawMethod"
                 value={method}
-                placeholder="Ընտրիր մեթոդը"
+                placeholder={t("withdrawSelectPlaceholder")}
                 options={withdrawMethodOptions}
                 onChange={(_, value) => {
                     setMethod(value as WithdrawMethod);
@@ -134,9 +134,7 @@ export default function Withdraw({
                     {cards.map((c) => (
                         <div
                             key={c.id}
-                            className={`card ${
-                                selectedCardId === c.id ? "active" : ""
-                            }`}
+                            className={`card ${selectedCardId === c.id ? "active" : ""}`}
                             onClick={() => setSelectedCardId(c.id)}
                         >
                             {c.brand} •••• {c.last4}
@@ -148,7 +146,7 @@ export default function Withdraw({
             <label>
                 <input
                     type="number"
-                    placeholder="Գումար (AMD)"
+                    placeholder={t("withdrawAmountPlaceholder")}
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                 />
@@ -160,14 +158,14 @@ export default function Withdraw({
                     onClick={submitWithdraw}
                     disabled={loading}
                 >
-                    {loading ? "..." : "Հաստատել"}
+                    {loading ? t("loading") : t("ok")}
                 </button>
 
                 <button
                     style={{ padding: "10px 30px" }}
                     onClick={onCloseAction}
                 >
-                    Փակել
+                    {t("close")}
                 </button>
             </div>
         </div>

@@ -72,6 +72,7 @@ export default function RootClient({ children }: PropsWithChildren) {
                     <ProvidersStrip/>
                     <TabsComponent />
                     <NavWrap onLoginClick={() => setIsOpenLogin(true)} />
+                    <ChatUser/>
                     <Footer />
 
                     {isLimited && currentLimit && (
@@ -82,8 +83,6 @@ export default function RootClient({ children }: PropsWithChildren) {
                     )}
                 </>
             )}
-
-            <ChatUser />
             {children}
 
             {isOpenLogin && <Login onClose={() => setIsOpenLogin(false)} />}
