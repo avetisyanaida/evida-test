@@ -1,6 +1,12 @@
 "use client";
 
-import {createContext, PropsWithChildren, useContext, useEffect, useState} from "react";
+import {
+    createContext,
+    PropsWithChildren,
+    useContext,
+    useEffect,
+    useState,
+} from "react";
 import { supabase } from "@/src/hooks/supabaseClient";
 
 interface UserData {
@@ -24,18 +30,19 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     const [user, setUser] = useState<UserData | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const isResetFlow = () => {
+        if (typeof window === "undefined") return false;
+        return window.location.pathname === "/reset";
+    };
+
     const loadUser = async () => {
         setLoading(true);
 
-        if (typeof window !== "undefined") {
-            const params = new URLSearchParams(window.location.search);
-            const type = params.get("type");
-
-            if (type === "recovery") {
-                setUser(null); // ⛔ reset-ը login ՉԷ
-                setLoading(false);
-                return;
-            }
+        // 🚫 RESET = ոչ մի user, վերջ
+        if (isResetFlow()) {
+            setUser(null);
+            setLoading(false);
+            return;
         }
 
         const { data } = await supabase.auth.getSession();
@@ -64,13 +71,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     };
 
     useEffect(() => {
-        const fetchUser = async () => {
-            await loadUser();
-        }
-        fetchUser().then(r => r)
+        loadUser();
 
         const { data: listener } = supabase.auth.onAuthStateChange(() => {
-            loadUser().then(r => r);
+            loadUser();
         });
 
         return () => {
@@ -85,6 +89,4 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     );
 };
 
-export const useUser = () => {
-    return useContext(UserContext);
-};
+export const useUser = () => useContext(UserContext);
