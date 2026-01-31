@@ -71,6 +71,13 @@ img {
 }
 .slick-dots {
   padding: 10px 0;
+  bottom: -40px;
+  @include screen-max-width-1200 {
+    bottom: -20px;
+  }
+  @include screen-max-width-767 {
+    bottom: 0;
+  }
 }
 .slick-dots li button:before {
   color: #ccc;
