@@ -3,6 +3,8 @@ import { cookies } from "next/headers";
 import { createRouteHandlerClient } from "@supabase/auth-helpers-nextjs";
 
 export async function GET(req: Request) {
+    console.log("🚨 AUTH CALLBACK HIT", req.url);
+
     const url = new URL(req.url);
     const code = url.searchParams.get("code");
     const type = url.searchParams.get("type");
@@ -13,12 +15,11 @@ export async function GET(req: Request) {
         await supabase.auth.exchangeCodeForSession(code);
     }
 
-    // ✅ եթե recovery է → reset
     if (type === "recovery") {
         return NextResponse.redirect("/reset" + url.search);
     }
 
-    // ✅ մնացածը → home կամ profile
     return NextResponse.redirect("/");
 }
+
 
