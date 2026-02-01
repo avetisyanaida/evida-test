@@ -37,19 +37,21 @@ export default function RootClient({ children }: PropsWithChildren) {
     const [isOpenLogin, setIsOpenLogin] = useState(false);
     const [isOpenSignup, setIsOpenSignup] = useState(false);
 
+    const isResetPage = pathname.startsWith("/reset");
     const isAdmin = pathname.startsWith("/admin");
     const isWallet = pathname.startsWith("/profile/wallet");
     const provider = searchParams.get("provider");
 
-    const isResetPage = pathname.startsWith("/reset"); // Ավելացրու սա
     const isCasino = pathname === "/" || pathname === "/profile" || !!provider;
-    const showFullLayout = isCasino && !isWallet;
+    const showFullLayout = isCasino && !isWallet && !isResetPage;
+
+    const headerLoggedIn = isResetPage ? false : isLoggedIn;
 
     return (
         <CasinoProvider>
-            {!isAdmin && !isResetPage && (
+            {!isAdmin &&  (
                 <Header
-                    isLoggedIn={isLoggedIn}
+                    isLoggedIn={headerLoggedIn}
                     userName={user?.name ?? ""}
                     uniqueId={user?.uniqueId ?? ""}
                     onLoginClick={() => setIsOpenLogin(true)}
