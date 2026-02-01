@@ -1,13 +1,12 @@
 "use client";
 
-import ResetPassword from "@/src/components/Login/ResetPassword";
+import { Suspense } from "react";
+import ResetContainer from "./ResetContainer";
 
-export default function Reset () {
-    console.log("🟡 RESET PAGE MOUNTED", {
-        path: window.location.pathname,
-        search: window.location.search,
-        hash: window.location.hash,
-    });
-
-    return <ResetPassword/>
+export default function ResetPage() {
+    return (
+        <Suspense fallback={<p>Loading…</p>}>
+            <ResetContainer />
+        </Suspense>
+    );
 }

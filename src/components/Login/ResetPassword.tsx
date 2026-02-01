@@ -1,102 +1,84 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { supabase } from "@/src/hooks/supabaseClient";
+import { useState } from "react";
 
-export default function ResetPage() {
-    const searchParams = useSearchParams();
-    const router = useRouter();
+interface Props {
+    loading: boolean;
+    onSave: (password: string) => void;
+}
 
-    const code = searchParams.get("code");
-
-    const [ready, setReady] = useState(false);
+export default function ResetPassword({ loading, onSave }: Props) {
     const [password, setPassword] = useState("");
-    const [loading, setLoading] = useState(false);
+    const [confirm, setConfirm] = useState("");
     const [error, setError] = useState<string | null>(null);
 
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirm, setShowConfirm] = useState(false);
 
-    // 🔒 guard — թույլ չի տալիս exchangeCodeForSession-ը կանչվի 2 անգամ
-    const exchangedRef = useRef(false);
-
-
-    useEffect(() => {
-        if (!code) {
-            setError("Invalid reset link");
+    const submit = () => {
+        if (!password || !confirm) {
+            setError("Fill all fields");
             return;
         }
 
-        if (exchangedRef.current) return;
-        exchangedRef.current = true;
-
-        // ResetPage.js - փոխիր սա
-        supabase.auth
-            .exchangeCodeForSession(code)
-            .then(({ data, error }) => {
-                if (error) {
-                    console.error("❌ exchange error", error);
-                    // Ստուգիր, եթե արդեն ունենք սեսիա, գուցե exchange-ի կարիք չկա
-                    supabase.auth.getSession().then(({ data: sessionData }) => {
-                        if (sessionData.session) {
-                            setReady(true);
-                        } else {
-                            setError("Reset link expired or invalid");
-                        }
-                    });
-                } else {
-                    setReady(true);
-                }
-            });
-    }, [code]);
-
-    const save = async () => {
-        if (!password || password.length < 6) {
+        if (password.length < 6) {
             setError("Password too short");
             return;
         }
 
-        setLoading(true);
-        setError(null);
-
-        const { error } = await supabase.auth.updateUser({ password });
-
-        setLoading(false);
-
-        if (error) {
-            setError("Password update failed");
+        if (password !== confirm) {
+            setError("Passwords do not match");
             return;
         }
 
-        await supabase.auth.signOut();
-        router.replace("/");
+        setError(null);
+        onSave(password);
     };
 
-    if (error) {
-        return <p style={{ color: "red" }}>{error}</p>;
-    }
-
-    if (!ready) {
-        return <p>Checking reset link…</p>;
-    }
-
-    // ResetPage-ի ներսում return-ը փոխիր այսպես.
     return (
         <div className="reset-wrapper">
-            <form
-                onSubmit={(e) => { e.preventDefault(); save(); }}
-                className="reset-form"
-            >
-                <input
-                    name="password" // Կարևոր է browser-ի համար
-                    type="password"
-                    placeholder="New password"
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    disabled={loading}
-                    autoComplete="new-password"
-                />
+            <h3>New Password</h3>
 
-                <button type="submit" disabled={loading}>
+            <form
+                className="reset-form"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                    submit();
+                }}
+            >
+                {error && <p className="reset-error">{error}</p>}
+
+                {/* New password */}
+                <label className="input-wrap">
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="New password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+
+                    <span
+                        className={`icon ${showPassword ? "eye-open" : "eye-close"}`}
+                        onClick={() => setShowPassword((v) => !v)}
+                    />
+                </label>
+
+                {/* Confirm password */}
+                <label className="input-wrap">
+                    <input
+                        type={showConfirm ? "text" : "password"}
+                        placeholder="Confirm password"
+                        value={confirm}
+                        onChange={(e) => setConfirm(e.target.value)}
+                    />
+
+                    <span
+                        className={`icon ${showConfirm ? "eye-open" : "eye-close"}`}
+                        onClick={() => setShowConfirm((v) => !v)}
+                    />
+                </label>
+
+                <button className="reset-form-btn" disabled={loading}>
                     {loading ? "Saving…" : "Save password"}
                 </button>
             </form>
