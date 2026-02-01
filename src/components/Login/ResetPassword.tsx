@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/src/hooks/supabaseClient";
 
 export default function ResetPassword() {
     const router = useRouter();
+    const searchParams = useSearchParams();
+    const code = searchParams.get("code");
 
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -13,12 +15,18 @@ export default function ResetPassword() {
     const [error, setError] = useState<string | null>(null);
     const [ready, setReady] = useState(false);
 
-    // ✅ ՍՏՈՒԳՈՒՄ ԵՆՔ՝ reset-ից հետո user կա՞
+    // 🔥 MAIN FIX
     useEffect(() => {
-        const check = async () => {
-            const { data } = await supabase.auth.getUser();
+        if (!code) {
+            setError("Reset link is invalid or expired");
+            return;
+        }
 
-            if (!data.user) {
+        const exchange = async () => {
+            const { error } = await supabase.auth.exchangeCodeForSession(code);
+
+            if (error) {
+                console.error("❌ exchangeCodeForSession", error);
                 setError("Reset link is invalid or expired");
                 return;
             }
@@ -26,8 +34,8 @@ export default function ResetPassword() {
             setReady(true);
         };
 
-        check();
-    }, []);
+        exchange();
+    }, [code]);
 
     const submit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -64,11 +72,15 @@ export default function ResetPassword() {
     };
 
     if (!ready) {
-        return <div style={{ color: "red" }}>{error ?? "Loading…"}</div>;
+        return (
+            <div style={{ color: "red", padding: 20 }}>
+                {error ?? "Checking reset link…"}
+            </div>
+        );
     }
 
     return (
-        <form onSubmit={submit}>
+        <form onSubmit={submit} style={{ padding: 20 }}>
             {error && <p style={{ color: "red" }}>{error}</p>}
 
             <input
@@ -85,7 +97,9 @@ export default function ResetPassword() {
                 onChange={e => setConfirmPassword(e.target.value)}
             />
 
-            <button disabled={loading}>Save password</button>
+            <button disabled={loading}>
+                {loading ? "Saving…" : "Save password"}
+            </button>
         </form>
     );
 }
