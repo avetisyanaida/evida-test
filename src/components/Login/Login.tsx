@@ -72,7 +72,7 @@ export const Login = ({ onClose }: Props) => {
         setMessage("");
 
         const { error } = await supabase.auth.resetPasswordForEmail(resetEmail, {
-            redirectTo:`${process.env.NEXT_PUBLIC_SITE_URL}/reset`,
+            redirectTo: `${window.location.origin}/reset`,
         });
 
 
