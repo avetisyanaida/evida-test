@@ -15,6 +15,9 @@ export interface AdminProps {
     user_id: string;
     user_code: number;
     phone: string;
+    isAdult?: boolean;
+    hasPromo?: boolean;
+    promoCode?: string;
 }
 
 export interface ErrorProps {
@@ -42,6 +45,9 @@ export const AdminComponent: React.FC<Props> = ({ onClose }) => {
         user_id: "",
         user_code: 0,
         phone: '+374',
+        isAdult: true,
+        promoCode: '',
+        hasPromo: false,
     });
 
     const [error, setError] = useState<ErrorProps>({
@@ -179,6 +185,9 @@ export const AdminComponent: React.FC<Props> = ({ onClose }) => {
                 user_id: authData.user.id,
                 user_code: 0,
                 phone: "+374",
+                isAdult: true,
+                promoCode: '',
+                hasPromo: true,
             });
 
             onClose();

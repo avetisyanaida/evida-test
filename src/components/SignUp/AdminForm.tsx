@@ -89,6 +89,52 @@ export const AdminForm = ({ formData, handleChange, handleClick, error, loading 
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 />
             </label>
+            <div className={'checkbox-row'}>
+                <label className="checkbox-row-label">
+                    <input
+                        type="checkbox"
+                        checked={formData.isAdult}
+                        onChange={() =>
+                            handleChange({
+                                target: {
+                                    name: "isAdult",
+                                    value: !formData.isAdult
+                                }
+                            } as any)
+                        }
+                    />
+                    <span>Ես հաստատում եմ, որ 18 տարեկանից բարձր եմ</span>
+                </label>
+            </div>
+
+            <div className="promo-block">
+                <label>
+                    <input
+                        type="checkbox"
+                        checked={formData.hasPromo}
+                        onChange={() =>
+                            handleChange({
+                                target: {
+                                    name: "hasPromo",
+                                    value: !formData.hasPromo
+                                }
+                            } as any)
+                        }
+                    />
+                    Ունեմ promo code
+                </label>
+
+                {formData.hasPromo && (
+                    <input
+                        type="text"
+                        name="promoCode"
+                        value={formData.promoCode}
+                        onChange={handleChange}
+                        placeholder="Promo code"
+                    />
+                )}
+            </div>
+
 
             <button className="log" onClick={handleClick} disabled={loading}>
                 {loading ? t("form.creating") : t("form.createAccount")}

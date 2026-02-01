@@ -121,3 +121,116 @@ h2 {
     }
   }
 }
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+  .checkbox-row-label {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    height: auto;
+    margin: 10px 0 0 0;
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.04);
+    cursor: pointer;
+    position: relative;
+    transition: all 0.25s ease;
+
+    &:hover {
+      border-color: rgba(255, 255, 255, 0.45);
+    }
+
+    &:checked {
+      border-color: #00f0ff;
+      background: rgba(0, 240, 255, 0.12);
+    }
+
+    &:checked::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      background: #00f0ff;
+      border-radius: 3px;
+      box-shadow: 0 0 8px rgba(0, 240, 255, 0.7);
+    }
+  }
+
+  span {
+    font-size: 14px;
+    color: #e6e6e6;
+  }
+}
+
+
+.promo-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+  max-width: 225px;
+  width: 100%;
+
+  label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    height: auto;
+    cursor: pointer;
+    font-size: 14px;
+    color: #e6e6e6;
+
+    input[type="checkbox"] {
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.04);
+      position: relative;
+      transition: all 0.25s ease;
+
+      &:checked {
+        border-color: #ff00d4;
+      }
+
+      &:checked::after {
+        content: "";
+        position: absolute;
+        inset: 4px;
+        background: #ff00d4;
+        border-radius: 50%;
+        box-shadow: 0 0 8px rgba(255, 0, 212, 0.6);
+      }
+    }
+  }
+
+  input[type="text"] {
+    height: 44px;
+    border-radius: 14px;
+    padding: 0 14px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: #fff;
+    outline: none;
+    margin-bottom: 20px;
+
+    &:focus {
+      border-color: #ff00d4;
+      box-shadow: 0 0 0 1px rgba(255, 0, 212, 0.35);
+    }
+  }
+}
+
