@@ -204,7 +204,8 @@
     "newPassword": "Նոր գաղտնաբառ",
     "confirmPassword": "Հաստատել գաղտնաբառը",
     "saving": "Պահպանվում է...",
-    "confirm": "Հաստատել"
+    "confirm": "Հաստատել",
+    "save": "Գաղտնաբառը պահպանվել է"
   },
   "registerModal": {
     "title": "Ստեղծել հաշիվ",

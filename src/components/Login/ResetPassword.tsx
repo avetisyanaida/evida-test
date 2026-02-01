@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import {useTranslation} from "react-i18next";
 
 interface Props {
     loading: boolean;
@@ -11,13 +12,14 @@ export default function ResetPassword({ loading, onSave }: Props) {
     const [password, setPassword] = useState("");
     const [confirm, setConfirm] = useState("");
     const [error, setError] = useState<string | null>(null);
+    const {t} = useTranslation();
 
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
     const submit = () => {
         if (!password || !confirm) {
-            setError("Fill all fields");
+            setError(t("reset.fillFields"));
             return;
         }
 
@@ -27,7 +29,7 @@ export default function ResetPassword({ loading, onSave }: Props) {
         }
 
         if (password !== confirm) {
-            setError("Passwords do not match");
+            setError(t("reset.notMatch"));
             return;
         }
 
@@ -37,7 +39,7 @@ export default function ResetPassword({ loading, onSave }: Props) {
 
     return (
         <div className="reset-wrapper">
-            <h3>New Password</h3>
+            <h3>{t("reset.title")}</h3>
 
             <form
                 className="reset-form"
@@ -52,7 +54,7 @@ export default function ResetPassword({ loading, onSave }: Props) {
                 <label className="input-wrap">
                     <input
                         type={showPassword ? "text" : "password"}
-                        placeholder="New password"
+                        placeholder={t('reset.newPassword')}
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
@@ -67,7 +69,7 @@ export default function ResetPassword({ loading, onSave }: Props) {
                 <label className="input-wrap">
                     <input
                         type={showConfirm ? "text" : "password"}
-                        placeholder="Confirm password"
+                        placeholder={t("reset.confirmPassword")}
                         value={confirm}
                         onChange={(e) => setConfirm(e.target.value)}
                     />
@@ -79,7 +81,7 @@ export default function ResetPassword({ loading, onSave }: Props) {
                 </label>
 
                 <button className="reset-form-btn" disabled={loading}>
-                    {loading ? "Saving…" : "Save password"}
+                    {loading ? t("reset.saving") : t("reset.save")}
                 </button>
             </form>
         </div>

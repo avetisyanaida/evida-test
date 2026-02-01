@@ -204,7 +204,8 @@
     "newPassword": "New Password",
     "confirmPassword": "Confirm Password",
     "saving": "Saving...",
-    "confirm": "Confirm"
+    "confirm": "Confirm",
+    "save": "Save Password"
   },
   "registerModal": {
     "title": "Create Account",

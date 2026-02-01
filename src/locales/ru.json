@@ -204,7 +204,8 @@
     "newPassword": "Новый пароль",
     "confirmPassword": "Подтвердите пароль",
     "saving": "Сохраняется...",
-    "confirm": "Подтвердить"
+    "confirm": "Подтвердить",
+    "save": "Пароль сохранён"
   },
   "registerModal": {
     "title": "Создать аккаунт",
