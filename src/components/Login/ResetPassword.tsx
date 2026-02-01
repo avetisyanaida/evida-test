@@ -1,69 +1,34 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { supabase } from "@/src/hooks/supabaseClient";
 
-export default function ResetPassword() {
-    const router = useRouter();
+export default function ResetPage() {
     const searchParams = useSearchParams();
+    const router = useRouter();
     const code = searchParams.get("code");
 
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
-    const [loading, setLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
     const [ready, setReady] = useState(false);
+    const [password, setPassword] = useState("");
+    const [error, setError] = useState<string | null>(null);
 
-    // 🔥 MAIN FIX
     useEffect(() => {
         if (!code) {
-            setError("Reset link is invalid or expired");
+            setError("Invalid reset link");
             return;
         }
 
-        const exchange = async () => {
-            const { error } = await supabase.auth.exchangeCodeForSession(code);
-
-            if (error) {
-                console.error("❌ exchangeCodeForSession", error);
-                setError("Reset link is invalid or expired");
-                return;
-            }
-
-            setReady(true);
-        };
-
-        exchange();
+        supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+            if (error) setError("Reset link expired");
+            else setReady(true);
+        });
     }, [code]);
 
-    const submit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        if (!password || !confirmPassword) {
-            setError("Fill all fields");
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            setError("Passwords do not match");
-            return;
-        }
-
-        if (password.length < 6) {
-            setError("Password too short");
-            return;
-        }
-
-        setLoading(true);
-        setError(null);
-
+    const save = async () => {
         const { error } = await supabase.auth.updateUser({ password });
-
-        setLoading(false);
-
         if (error) {
-            setError("Failed to update password");
+            setError("Password update failed");
             return;
         }
 
@@ -71,35 +36,18 @@ export default function ResetPassword() {
         router.replace("/login");
     };
 
-    if (!ready) {
-        return (
-            <div style={{ color: "red", padding: 20 }}>
-                {error ?? "Checking reset link…"}
-            </div>
-        );
-    }
+    if (error) return <p style={{ color: "red" }}>{error}</p>;
+    if (!ready) return <p>Checking reset link…</p>;
 
     return (
-        <form onSubmit={submit} style={{ padding: 20 }}>
-            {error && <p style={{ color: "red" }}>{error}</p>}
-
+        <div>
             <input
                 type="password"
                 placeholder="New password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
             />
-
-            <input
-                type="password"
-                placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={e => setConfirmPassword(e.target.value)}
-            />
-
-            <button disabled={loading}>
-                {loading ? "Saving…" : "Save password"}
-            </button>
-        </form>
+            <button onClick={save}>Save password</button>
+        </div>
     );
 }
