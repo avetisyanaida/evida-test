@@ -7,19 +7,16 @@ const slides = [
     {
         id: 1,
         desktop: "/bonus-camp.png",
-        mobile: "/bonus-camp.png",
         title: "Բարի գալուստ մեր կայք",
     },
     {
         id: 2,
         desktop: "/bonus-camp3.png",
-        mobile: "/bonus-camp3.png",
         title: "Խաղա ու շահիր",
     },
     {
         id: 3,
         desktop: "/bonus-camp2.png",
-        mobile: "/bonus-camp2.png",
         title: "Մասնակցիր մրցաշարերին",
     },
 ];
@@ -35,24 +32,24 @@ export const SliderSection = () => {
         return () => clearInterval(timer);
     }, []);
 
+    const slide = slides[index];
+
     return (
         <section className="hero-slider">
-            {slides.map((slide, i) => (
-                <div
+            {/* ՄԻԱՅՆ ՄԵԿ IMAGE */}
+            <div className="hero-slide active">
+                <Image
                     key={slide.id}
-                    className={`hero-slide ${i === index ? "active" : ""}`}
-                >
-                    <Image
-                        src={slide.desktop}
-                        alt={slide.title}
-                        fill
-                        priority={i === 0}
-                        sizes="(max-width: 768px) 100vw, 1920px"
-                        className="hero-image"
-                    />
-                </div>
-            ))}
+                    src={slide.desktop}
+                    alt={slide.title}
+                    fill
+                    priority
+                    sizes="(max-width: 768px) 100vw, 1920px"
+                    className="hero-image"
+                />
+            </div>
 
+            {/* dots */}
             <div className="hero-dots">
                 {slides.map((_, i) => (
                     <button
