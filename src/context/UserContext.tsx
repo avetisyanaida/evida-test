@@ -45,7 +45,6 @@ export const UserProvider = ({children}: PropsWithChildren) => {
         // 🚫 RESET = ոչ մի user, վերջ
         if (isResetFlow()) {
             console.log("🟣 RESET FLOW → SKIP USER");
-            setUser(null);
             setLoading(false);
             return;
         }

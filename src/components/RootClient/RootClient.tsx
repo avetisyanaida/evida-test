@@ -21,25 +21,6 @@ import { useScrollTop } from "@/src/hooks/useScrollTop";
 import { useUser } from "@/src/context/UserContext";
 import {ProvidersStrip} from "@/src/components/ProvidersStrip/ProvidersStrip";
 
-function ResetInterceptor() {
-    const pathname = usePathname();
-    const searchParams = useSearchParams();
-
-    // եթե արդեն reset էջում ենք, ոչինչ չանենք
-    if (pathname === "/reset") return null;
-
-    const code = searchParams.get("code");
-
-    if (code) {
-        // սա reset flow է → force ուղարկում ենք /reset
-        if (typeof window !== "undefined") {
-            window.location.replace(`/reset?${searchParams.toString()}`);
-        }
-    }
-
-    return null;
-}
-
 
 export default function RootClient({ children }: PropsWithChildren) {
     useScrollTop();
@@ -65,7 +46,6 @@ export default function RootClient({ children }: PropsWithChildren) {
 
     return (
         <CasinoProvider>
-            <ResetInterceptor/>
             {!isAdmin && (
                 <Header
                     isLoggedIn={isLoggedIn}
