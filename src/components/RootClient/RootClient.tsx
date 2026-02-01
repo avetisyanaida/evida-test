@@ -41,8 +41,9 @@ export default function RootClient({ children }: PropsWithChildren) {
     const isWallet = pathname.startsWith("/profile/wallet");
     const provider = searchParams.get("provider");
 
+    const isResetPage = pathname.startsWith("/reset"); // Ավելացրու սա
     const isCasino = pathname === "/" || pathname === "/profile" || !!provider;
-    const showFullLayout = isCasino && !isWallet;
+    const showFullLayout = isCasino && !isWallet && isResetPage;
 
     return (
         <CasinoProvider>

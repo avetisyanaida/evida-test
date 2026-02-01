@@ -15,8 +15,6 @@ export default function ResetPage() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    console.log("Code from URL:", code)
-
 
     // 🔒 guard — թույլ չի տալիս exchangeCodeForSession-ը կանչվի 2 անգամ
     const exchangedRef = useRef(false);
@@ -70,7 +68,7 @@ export default function ResetPage() {
         }
 
         await supabase.auth.signOut();
-        router.replace("/login");
+        router.replace("/");
     };
 
     if (error) {
