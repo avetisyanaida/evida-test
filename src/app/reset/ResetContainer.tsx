@@ -18,8 +18,10 @@ export default function ResetContainer() {
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        // 1️⃣ case: ?code=...
-        if (code && !exchangedRef.current) {
+        // 1️⃣ ?code=... → exchange
+        if (code) {
+            if (exchangedRef.current) return;
+
             exchangedRef.current = true;
 
             supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
@@ -30,10 +32,10 @@ export default function ResetContainer() {
                 }
             });
 
-            return;
+            return; // ❗ շատ կարևոր
         }
 
-        // 2️⃣ case: #access_token=... (hash flow)
+        // 2️⃣ #access_token=... → արդեն session կա
         supabase.auth.getSession().then(({ data }) => {
             if (data.session) {
                 setReady(true);
