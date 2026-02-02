@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {
     try {
+        console.log("📨 TELEGRAM WEBHOOK HIT");
+
         const body = await req.json();
+        console.log("📦 TELEGRAM BODY:", JSON.stringify(body));
+
+        console.log("SITE_URL:", process.env.SITE_URL);
 
         console.log("SITE_URL:", process.env.SITE_URL);
 
@@ -25,7 +30,10 @@ export async function POST(req: Request) {
 
         const [action, withdrawId] = data.split(":");
 
-        await fetch(`${process.env.SITE_URL}/api/admin/withdraw-action`, {
+        console.log("➡️ TELEGRAM ACTION:", action, "WITHDRAW:", withdrawId);
+
+
+       const res = await fetch(`${process.env.SITE_URL}/api/admin/withdraw-action`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -34,6 +42,11 @@ export async function POST(req: Request) {
                 comment: "Telegram action",
             }),
         });
+
+        console.log("⬅️ ADMIN ACTION STATUS:", res.status);
+
+
+
 
         await fetch(
             `https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/editMessageText`,
