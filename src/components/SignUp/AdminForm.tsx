@@ -165,6 +165,7 @@ export const AdminForm = ({
             </div>
 
             <button
+                type={'submit'}
                 className="log"
                 onClick={() => {
                     setSubmitted(true);

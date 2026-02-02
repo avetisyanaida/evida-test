@@ -1,5 +1,6 @@
+// app/api/withdraw/route.ts
 import { NextResponse } from "next/server";
-import {supabaseAdmin} from "@/src/hooks/supabaseAdmin";
+import { supabaseAdmin } from "@/src/hooks/supabaseAdmin";
 
 export async function POST(req: Request) {
     try {
@@ -11,21 +12,27 @@ export async function POST(req: Request) {
         }
 
         // 1️⃣ balance check
-        const { data: user, error: uErr } = await supabaseAdmin
+        const { data: user } = await supabaseAdmin
             .from("users")
             .select("balance")
             .eq("user_id", user_id)
             .single();
 
-        if (uErr || !user || Number(user.balance) < parsedAmount) {
+        if (!user || Number(user.balance) < parsedAmount) {
             return NextResponse.json(
                 { error: "Insufficient balance" },
                 { status: 400 }
             );
         }
 
-        // 2️⃣ withdraw request
-        const { data: withdraw, error: wErr } = await supabaseAdmin
+        // 2️⃣ 🔥 balance ↓ (ՀԻՄԱ)
+        await supabaseAdmin.rpc("decrement_balance", {
+            p_user_id: user_id,
+            p_amount: parsedAmount,
+        });
+
+        // 3️⃣ withdraw request
+        const { data: withdraw } = await supabaseAdmin
             .from("withdraw_requests")
             .insert({
                 user_id,
@@ -37,40 +44,19 @@ export async function POST(req: Request) {
             .select()
             .single();
 
-        if (wErr || !withdraw) {
-            console.error("WITHDRAW INSERT ERROR:", wErr);
-            return NextResponse.json(
-                { error: "Withdraw create failed" },
-                { status: 500 }
-            );
-        }
-
-        // 3️⃣ transaction (🔥 reference կապ)
-        const { error: txErr } = await supabaseAdmin
-            .from("transactions")
-            .insert({
-                user_id,
-                type: "withdraw",
-                amount: parsedAmount,
-                status: "pending",
-                method,
-                reference_id: withdraw.id,
-            });
-
-        if (txErr) {
-            console.error("TX INSERT ERROR:", txErr);
-            return NextResponse.json(
-                { error: "Transaction create failed" },
-                { status: 500 }
-            );
-        }
+        // 4️⃣ transaction
+        await supabaseAdmin.from("transactions").insert({
+            user_id,
+            type: "withdraw",
+            amount: parsedAmount,
+            status: "pending",
+            method,
+            reference_id: withdraw.id,
+        });
 
         return NextResponse.json({ success: true, withdrawId: withdraw.id });
     } catch (err) {
-        console.error("WITHDRAW API CRASH:", err);
-        return NextResponse.json(
-            { error: "Server error" },
-            { status: 500 }
-        );
+        console.error("WITHDRAW ERROR:", err);
+        return NextResponse.json({ error: "Server error" }, { status: 500 });
     }
 }

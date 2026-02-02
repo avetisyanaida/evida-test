@@ -1,13 +1,10 @@
+// app/api/admin/withdraw-action/route.ts
 import { NextResponse } from "next/server";
 import { supabaseAdmin } from "@/src/hooks/supabaseAdmin";
 
 export async function POST(req: Request) {
     try {
         const { id, status, comment } = await req.json();
-
-        if (!id || !status) {
-            return NextResponse.json({ ok: false });
-        }
 
         const { data: withdraw } = await supabaseAdmin
             .from("withdraw_requests")
@@ -19,30 +16,16 @@ export async function POST(req: Request) {
             return NextResponse.json({ ok: false });
         }
 
-        const { data: user } = await supabaseAdmin
-            .from("users")
-            .select("balance")
-            .eq("user_id", withdraw.user_id)
-            .single();
-
-        if (!user) {
-            return NextResponse.json({ ok: false });
+        // ❌ APPROVE → balance չի փոխվում
+        if (status === "rejected") {
+            // ✅ refund
+            await supabaseAdmin.rpc("increment_balance", {
+                p_user_id: withdraw.user_id,
+                p_amount: withdraw.amount,
+            });
         }
 
-        if (status === "approved") {
-            const newBalance =
-                Number(user.balance) - Number(withdraw.amount);
-
-            if (newBalance < 0) {
-                return NextResponse.json({ ok: false });
-            }
-
-            await supabaseAdmin
-                .from("users")
-                .update({ balance: newBalance })
-                .eq("user_id", withdraw.user_id);
-        }
-
+        // update withdraw
         await supabaseAdmin
             .from("withdraw_requests")
             .update({
@@ -51,6 +34,7 @@ export async function POST(req: Request) {
             })
             .eq("id", id);
 
+        // update transaction
         await supabaseAdmin
             .from("transactions")
             .update({
@@ -58,7 +42,6 @@ export async function POST(req: Request) {
                 admin_comment: comment ?? null,
             })
             .eq("reference_id", withdraw.id);
-
 
         return NextResponse.json({ ok: true });
     } catch (err) {
