@@ -95,7 +95,7 @@ export default function Balance() {
                                 <li>
                                     <button className="cards-btn" onClick={() => { setShowCardInfo("card"); setShowDeposit(true); setShowWithdraw(false); setShowHistory(false); }}>
                                         <div className="users-cards">
-                                            <div className="users-cards-img"><Image src="/masterCard.png" alt="mastercard" width={48} height={48} /></div>
+                                            <div className="users-cards-img"><Image src="/masterCard.webp" alt="mastercard" width={48} height={48} /></div>
                                             <p>{t("card")}</p>
                                         </div>
                                     </button>
@@ -107,7 +107,7 @@ export default function Balance() {
                                 <li>
                                     <button className="cards-btn" onClick={() => { setShowCardInfo("idram"); setShowDeposit(true); setShowWithdraw(false); setShowHistory(false); }}>
                                         <div className="users-cards">
-                                            <div className="users-cards-img"><Image src="/idBank.png" alt="idram" width={48} height={48} /></div>
+                                            <div className="users-cards-img"><Image src="/idBank.webp" alt="idram" width={48} height={48} /></div>
                                             <p>Idram / idBank</p>
                                         </div>
                                     </button>
@@ -119,7 +119,7 @@ export default function Balance() {
                                 <li>
                                     <button className="cards-btn">
                                         <div className="users-cards">
-                                            <div className="users-cards-img"><Image src="/telCell.png" alt="telcell" width={48} height={48} /></div>
+                                            <div className="users-cards-img"><Image src="/telCell.webp" alt="telcell" width={48} height={48} /></div>
                                             <p>TelCell Wallet</p>
                                         </div>
                                     </button>
