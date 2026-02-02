@@ -16,6 +16,10 @@ export default function RootLayout({ children }:PropsWithChildren) {
         <head>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <meta
+                name={'description'}
+                content={'EVIDA Casino — Online slots, live casino, bonuses and tournaments.'}
+            />
             <link rel="icon" type="image/png" href="/logo-profile.webp" />
             <title>EVIDA CASINO</title>
         </head>
