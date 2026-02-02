@@ -2,35 +2,43 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import useBreakpoints from "@/src/hooks/useBreackPoints";
 
 const slides = [
     {
         id: 1,
         desktop: "/bonus-camp.webp",
+        mobile: "/bonus-camp-mobile.webp",
         title: "Բարի գալուստ մեր կայք",
     },
     {
         id: 2,
         desktop: "/bonus-camp3.webp",
+        mobile: "/bonus-camp3-mobile.webp",
         title: "Խաղա ու շահիր",
     },
     {
         id: 3,
         desktop: "/bonus-camp2.webp",
+        mobile: "/bonus-camp2-mobile.webp",
         title: "Մասնակցիր մրցաշարերին",
     },
 ];
 
 export const SliderSection = () => {
     const [index, setIndex] = useState(0);
+    const {isMobile} = useBreakpoints();
 
     useEffect(() => {
+        if (isMobile) return; // ⬅️ mobile-ում սլայդը չի շարժվում
+
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % slides.length);
-        }, 5000);
+        }, 6000);
 
         return () => clearInterval(timer);
-    }, []);
+    }, [isMobile]);
+
 
     const slide = slides[index];
 
@@ -40,11 +48,11 @@ export const SliderSection = () => {
             <div className="hero-slide active">
                 <Image
                     key={slide.id}
-                    src={slide.desktop}
+                    src={isMobile ? slide.mobile : slide.desktop}
                     alt={slide.title}
                     fill
                     priority
-                    sizes="(max-width: 768px) 100vw, 1920px"
+                    sizes={isMobile ? "100vw" : "1920px"}
                     className="hero-image"
                 />
             </div>
