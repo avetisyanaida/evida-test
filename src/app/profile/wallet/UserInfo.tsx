@@ -6,7 +6,7 @@ export const UserInfo = ({ username, uniqueId }: { username: string | null; uniq
     return (
         <div className="users-welcome">
             <a href="">
-                <Image src={"/logo-profile.png"} alt="profile" width={48} height={48} />
+                <Image src={"/logo-profile.webp"} alt="profile" width={48} height={48} />
             </a>
             <div>
                 <h2>{t("greeting")} {username}</h2>

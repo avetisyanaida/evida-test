@@ -58,7 +58,7 @@ export const UserMenu = ({
                         }`}
                     ></i>
                 </a>
-                <Image src="/logo-profile.png" alt="" width={100} height={100} />
+                <Image src="/logo-profile.webp" alt="" width={100} height={100} />
             </button>
 
             {showPopover && (

@@ -16,7 +16,7 @@ export default function RootLayout({ children }:PropsWithChildren) {
         <head>
             <meta charSet="UTF-8" />
             <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <link rel="icon" type="image/png" href="/logo-profile.png" />
+            <link rel="icon" type="image/png" href="/logo-profile.webp" />
             <title>EVIDA CASINO</title>
         </head>
         <body className={'app-body'}>
