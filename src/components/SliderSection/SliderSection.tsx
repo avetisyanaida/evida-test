@@ -51,6 +51,7 @@ export const SliderSection = () => {
                     alt={slide.title}
                     fill
                     priority
+                    fetchPriority={'high'}
                     sizes={isMobile ? "100vw" : "1920px"}
                     className="hero-image"
                 />

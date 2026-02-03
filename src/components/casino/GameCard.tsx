@@ -95,6 +95,7 @@ export const GameCard = ({ game }: { game: CasinoGame }) => {
                     width={300}
                     height={200}
                     loading="lazy"
+                    fetchPriority={'low'}
                     onError={handleError}
                 />
 
