@@ -1,3 +1,5 @@
+"use client";
+
 export const GA_ID = "G-BXL5J7QPYC";
 
 declare global {

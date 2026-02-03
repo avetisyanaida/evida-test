@@ -10,6 +10,7 @@ import Script from "next/script";
 
 import RootClient from "@/src/components/RootClient/RootClient";
 import { UserProvider } from "@/src/context/UserContext";
+import {GA_ID} from "@/src/lib/ga";
 
 export const dynamic = "force-dynamic";
 
@@ -39,7 +40,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-BXL5J7QPYC', {
+            gtag('config', ${GA_ID}, {
               page_path: window.location.pathname,
             });
           `}
