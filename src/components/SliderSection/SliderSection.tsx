@@ -30,7 +30,7 @@ export const SliderSection = () => {
     const {isMobile} = useBreakpoints();
 
     useEffect(() => {
-        if (isMobile) return; // ⬅️ mobile-ում սլայդը չի շարժվում
+        if (isMobile) return;
 
         const timer = setInterval(() => {
             setIndex((prev) => (prev + 1) % slides.length);
@@ -44,7 +44,6 @@ export const SliderSection = () => {
 
     return (
         <section className="hero-slider">
-            {/* ՄԻԱՅՆ ՄԵԿ IMAGE */}
             <div className="hero-slide active">
                 <Image
                     key={slide.id}

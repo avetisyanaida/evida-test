@@ -16,7 +16,6 @@ import { useBalance } from "@/src/hooks/useBalance";
 import { useBalanceRealtime } from "@/src/hooks/useBalanceRealtime";
 import Image from "next/image";
 
-// Նոր ներմուծված կոմպոնենտները
 import { UserInfo } from "./UserInfo";
 import { WalletSummary } from "./WalletSummary";
 import {BalanceSidebar} from "@/src/app/profile/wallet/BalanceSlideBar";
@@ -91,7 +90,6 @@ export default function Balance() {
                     {showDeposit && !showAttachCard && (
                         <div className="cards-info">
                             <ul>
-                                {/* Card Payment Option */}
                                 <li>
                                     <button className="cards-btn" onClick={() => { setShowCardInfo("card"); setShowDeposit(true); setShowWithdraw(false); setShowHistory(false); }}>
                                         <div className="users-cards">
@@ -103,7 +101,6 @@ export default function Balance() {
                                         <Deposit onClose={() => setShowDeposit(false)} onBalanceUpdate={fetchBalance} mode="card" />
                                     )}
                                 </li>
-                                {/* Idram Option */}
                                 <li>
                                     <button className="cards-btn" onClick={() => { setShowCardInfo("idram"); setShowDeposit(true); setShowWithdraw(false); setShowHistory(false); }}>
                                         <div className="users-cards">
@@ -115,7 +112,6 @@ export default function Balance() {
                                         <Deposit onClose={() => setShowDeposit(false)} onBalanceUpdate={fetchBalance} mode="idram" />
                                     )}
                                 </li>
-                                {/* TelCell & EasyPay (Static for now as in original) */}
                                 <li>
                                     <button className="cards-btn">
                                         <div className="users-cards">

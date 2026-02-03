@@ -175,7 +175,6 @@ export const AdminForm = ({
             >
                 {loading ? t("form.creating") : t("form.createAccount")}
             </button>
-
         </div>
     );
 };

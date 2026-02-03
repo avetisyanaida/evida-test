@@ -4,26 +4,49 @@ import "@/src/assets/styles/mixin.scss";
 import "@/src/assets/styles/variables.scss";
 import "@/src/assets/icons/icon.css";
 import "@/src/i18n";
-import type {PropsWithChildren} from "react";
+
+import type { PropsWithChildren } from "react";
+import Script from "next/script";
+
 import RootClient from "@/src/components/RootClient/RootClient";
-import {UserProvider} from "@/src/context/UserContext";
+import { UserProvider } from "@/src/context/UserContext";
 
-export const dynamic = 'force-dynamic';
+export const dynamic = "force-dynamic";
 
-export default function RootLayout({ children }:PropsWithChildren) {
+export default function RootLayout({ children }: PropsWithChildren) {
     return (
         <html lang="en">
         <head>
             <meta charSet="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <meta
-                name={'description'}
-                content={'EVIDA Casino — Online slots, live casino, bonuses and tournaments.'}
+                name="viewport"
+                content="width=device-width, initial-scale=1"
+            />
+            <meta
+                name="description"
+                content="EVIDA Casino — Online slots, live casino, bonuses and tournaments."
             />
             <link rel="icon" type="image/png" href="/logo-profile.webp" />
             <title>EVIDA CASINO</title>
+
+            {/* 🔥 GOOGLE ANALYTICS */}
+            <Script
+                src="https://www.googletagmanager.com/gtag/js?id=G-BXL5J7QPYC"
+                strategy="afterInteractive"
+            />
+            <Script id="ga-init" strategy="afterInteractive">
+                {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-BXL5J7QPYC', {
+              page_path: window.location.pathname,
+            });
+          `}
+            </Script>
         </head>
-        <body className={'app-body'}>
+
+        <body className="app-body">
         <main className="main-content">
             <UserProvider>
                 <RootClient>{children}</RootClient>
