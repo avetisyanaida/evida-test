@@ -26,6 +26,9 @@
     }
     img {
       aspect-ratio: 3 / 2;
+      @include screen-max-width-767 {
+        aspect-ratio: 4 / 3;
+      }
     }
     .buttons {
       opacity: 0;
