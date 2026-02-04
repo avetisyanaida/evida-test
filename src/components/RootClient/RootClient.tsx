@@ -20,7 +20,7 @@ import { useAccountLimit } from "@/src/hooks/useAccountLimit";
 import { useScrollTop } from "@/src/hooks/useScrollTop";
 import { useUser } from "@/src/context/UserContext";
 import {ProvidersStrip} from "@/src/components/ProvidersStrip/ProvidersStrip";
-import {Platform} from "@/src/components/IGaming-Platform/Platform";
+// import {Platform} from "@/src/components/IGaming-Platform/Platform";
 
 
 export default function RootClient({ children }: PropsWithChildren) {
@@ -73,7 +73,7 @@ export default function RootClient({ children }: PropsWithChildren) {
             {!isAdmin && showFullLayout && (
                 <>
                     <HeaderMenu />
-                    <Platform/>
+                    {/*<Platform/>*/}
                     <SliderSection />
                     <ProvidersStrip/>
                     <TabsComponent />
