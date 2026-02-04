@@ -26,6 +26,10 @@ export default function RootLayout({ children }: PropsWithChildren) {
                 name="description"
                 content="Casino platform technical demo with admin panel, wallet logic and user management. Built for iGaming projects and startups."
             />
+            <meta
+                name="google-site-verification"
+                content="Xxn5z7QQHRYtrACLluLtu9ntbfEMk99euuMJC9c0QCE"
+            />
             <link rel="icon" type="image/png" href="/logo-profile.webp" />
             <title>Casino Platform Demo | iGaming Admin & Wallet System</title>
 
