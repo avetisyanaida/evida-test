@@ -8,7 +8,7 @@ type Lang = "hy" | "ru" | "en";
 export const LangSwitcher = () => {
     const { i18n } = useTranslation();
 
-    const [lang, setLang] = useState<Lang>("en"); // ✅ միշտ նույնը
+    const [lang, setLang] = useState<Lang>("hy");
     const [open, setOpen] = useState(false);
 
     // 🔑 localStorage → միայն mount-ից հետո
@@ -48,14 +48,14 @@ export const LangSwitcher = () => {
 
             {open && (
                 <div className="lang-menu">
+                    <button className={'lang-btn'} onClick={() => changeLang("hy")}>
+                        <i className="icon armenia" /> HY
+                    </button>
                     <button className={'lang-btn'} onClick={() => changeLang("en")}>
                         <i className="icon usa" /> EN
                     </button>
                     <button className={'lang-btn'} onClick={() => changeLang("ru")}>
                         <i className="icon russia" /> RU
-                    </button>
-                    <button className={'lang-btn'} onClick={() => changeLang("hy")}>
-                        <i className="icon armenia" /> HY
                     </button>
                 </div>
             )}
