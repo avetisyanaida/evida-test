@@ -21,7 +21,7 @@ export default function Footer() {
                         <ul>
                             <li><a href={"#"}>{t("footer.slots")}</a></li>
                             <li><a href={"#"}>{t("footer.promos")}</a></li>
-                            <li><a href={"#"}>{t("footer.affiliate")}</a></li>
+                            <li><a href={"https://affiliate.apartners.club/#/affiliate/register/3?affiliate_id=101636"} target={'_blank'}>{t("footer.affiliate")}</a></li>
                             <li><a href={"#"}>{t("footer.bonuses")}</a></li>
                         </ul>
                     </div>
