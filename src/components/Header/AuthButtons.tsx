@@ -30,11 +30,6 @@ export const AuthButtons = ({ onLoginClick, onSignupClick }: AuthButtonsProps) =
     return (
         <>
             <li>
-                <Link href={'/play'} className={'play-real-btn'}>
-                    🎰 Խաղալ իրական գումարով
-                </Link>
-            </li>
-            <li>
                 <button className="login-btn log" onClick={handleLoginClick}>
                     {t("login")}
                 </button>

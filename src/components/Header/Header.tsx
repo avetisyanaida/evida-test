@@ -196,15 +196,15 @@ export const Header = ({
                         />
                     </button>
                     <Link href={'https://app.leadteh.ru/w/fmFZ3'} target={'_blank'}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '35px',
-                            height: '35px',
-                            borderRadius: '50%',
-                            backgroundColor: '#1B92D1FF',
-                        }}
+                          style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              width: '35px',
+                              height: '35px',
+                              borderRadius: '50%',
+                              backgroundColor: '#1B92D1FF',
+                          }}
                     >
                         <i style={{backgroundColor: 'white', fontSize: '30px'}} className={'icon telegram'}></i>
                     </Link>
@@ -219,15 +219,6 @@ export const Header = ({
                             />
                         ) : (
                             <>
-                                <li>
-                                    <Link
-                                        href={'/play'}
-                                        className="play-real-btn"
-                                    >
-                                        🎰 Խաղալ իրական գումարով
-                                    </Link>
-                                </li>
-
                                 <li className="profile-deposit">
                                     <button className={'user-info-btn'} onClick={handleDeposit}>
                                         {t("deposit")}
