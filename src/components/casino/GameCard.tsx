@@ -17,6 +17,7 @@ export const GameCard = ({ game }: { game: CasinoGame }) => {
     const {t} = useTranslation();
 
     const [isDemoOpen, setIsDemoOpen] = useState(false);
+    const [isGameOpen, setIsGameOpen] = useState(false);
 
     const [variantIndex, setVariantIndex] = useState(0);
     const [src, setSrc] = useState(basePath + IMAGE_EXTS[0]);
@@ -35,6 +36,16 @@ export const GameCard = ({ game }: { game: CasinoGame }) => {
             mode: "demo",
         });
     }, [isDemoOpen]);
+
+    useEffect(() => {
+        if (!isGameOpen) return;
+        gaEvent("game_play", {
+            game_id: game.id,
+            game_name: game.title,
+            provider: game.provider || "unknown",
+            mode: "game",
+        })
+    }, [isGameOpen]);
 
 
     useEffect(() => {
@@ -66,7 +77,21 @@ export const GameCard = ({ game }: { game: CasinoGame }) => {
 
 
     const handleCardClick = () => isMobile && setIsModalOpen(true);
-    const handlePlay = () => console.log("PLAY:", game.title);
+    const handlePlay = () => {
+        if (!game.gameUrl) return;
+
+        gaEvent("game_play", {
+            game_id: game.id,
+            game_name: game.title,
+            provider: game.provider || "unknown",
+            mode: "affiliate",
+            device: isMobile ? "mobile" : "desktop",
+        });
+
+        window.open(game.gameUrl, "_self");
+    };
+
+
     const handleDemo = () => {
         if (!game.demoUrl) return;
 

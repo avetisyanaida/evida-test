@@ -9,6 +9,7 @@ export const amusnetEgyptQuestGames: CasinoGame[] = [
         provider: 'amusnetEgyptQuest',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 2,
@@ -18,6 +19,7 @@ export const amusnetEgyptQuestGames: CasinoGame[] = [
         provider: 'amusnetEgyptQuest',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
 
     },
     {
@@ -28,6 +30,7 @@ export const amusnetEgyptQuestGames: CasinoGame[] = [
         provider: 'amusnetEgyptQuest',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
 
     },
     {
@@ -38,6 +41,7 @@ export const amusnetEgyptQuestGames: CasinoGame[] = [
         provider: 'amusnetEgyptQuest',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 5,
@@ -47,6 +51,7 @@ export const amusnetEgyptQuestGames: CasinoGame[] = [
         provider: 'amusnetEgyptQuest',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 6,
@@ -56,5 +61,6 @@ export const amusnetEgyptQuestGames: CasinoGame[] = [
         provider: 'amusnetEgyptQuest',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
 ];

@@ -9,6 +9,7 @@ export const microGamingGames: CasinoGame [] =[
         provider: 'microGaming',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 2,
@@ -18,6 +19,7 @@ export const microGamingGames: CasinoGame [] =[
         provider: 'microGaming',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 3,
@@ -27,6 +29,7 @@ export const microGamingGames: CasinoGame [] =[
         provider: 'microGaming',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 4,
@@ -36,6 +39,7 @@ export const microGamingGames: CasinoGame [] =[
         provider: 'microGaming',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
     {
         id: 5,
@@ -45,5 +49,6 @@ export const microGamingGames: CasinoGame [] =[
         provider: 'microGaming',
         demoUrl:
             "https://demogamesfree.pragmaticplay.net/gs2c/openGame.do?gameSymbol=vs20fruitsw",
+        gameUrl: 'https://goodwin.am/open/register?btag=ag101636&agent_terms=true&agent_redirect=true'
     },
 ]

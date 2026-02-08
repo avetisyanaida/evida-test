@@ -7,4 +7,5 @@ export interface CasinoGame {
     popularity?: number;
     isNew?: boolean;
     demoUrl?: string;
+    gameUrl?: string;
 }
