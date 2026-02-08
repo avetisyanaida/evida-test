@@ -142,3 +142,7 @@
     mask-image: url(./delete-card.svg);
     -webkit-mask-image: url(./delete-card.svg);
 }
+.icon.telegram {
+    mask-image: url(./telegram.svg);
+    -webkit-mask-image: url(./telegram.svg);
+}

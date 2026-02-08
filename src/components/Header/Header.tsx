@@ -184,16 +184,31 @@ export const Header = ({
     return (
         <div className="container">
             <div className="main-block-item">
-                <button className="logo-profile" onClick={handleMenuHover}>
-                    <Image
-                        src={!isMobile ? "/evida-casino.svg" : "/evida-text.svg"}
-                        alt="Evida"
-                        width={100}
-                        height={100}
-                        priority
-                        loading={"eager"}
-                    />
-                </button>
+                <div className={'logo-tel'} style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
+                    <button className="logo-profile" onClick={handleMenuHover}>
+                        <Image
+                            src={!isMobile ? "/evida-casino.svg" : "/evida-text.svg"}
+                            alt="Evida"
+                            width={100}
+                            height={100}
+                            priority
+                            loading={"eager"}
+                        />
+                    </button>
+                    <Link href={'https://app.leadteh.ru/w/fmFZ3'} target={'_blank'}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            width: '35px',
+                            height: '35px',
+                            borderRadius: '50%',
+                            backgroundColor: '#1B92D1FF',
+                        }}
+                    >
+                        <i style={{backgroundColor: 'white', fontSize: '30px'}} className={'icon telegram'}></i>
+                    </Link>
+                </div>
 
                 {!isTabletLarge ? (
                     <ul className="user-info">
